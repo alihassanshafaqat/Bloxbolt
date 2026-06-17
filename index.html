@@ -92,12 +92,7 @@
       animation: logoPulse 0.9s ease-in-out infinite alternate;
     }
 
-    #loading span {
-      color: var(--text3);
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
+
 
     @keyframes logoPulse {
       from {
@@ -107,7 +102,7 @@
 
       to {
         transform: scale(1.1);
-        filter: brightness(1.4)drop-shadow(0 0 14px #7c3aed);
+        filter: brightness(1.0)drop-shadow(0 0 5px #7c3aed);
       }
     }
 
@@ -235,19 +230,8 @@
     }
 
     .welcome-logo-row img {
-      width: 44px;
+      width: auto;
       height: 44px;
-    }
-
-    .welcome-logo-row span {
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--text);
-    }
-
-    .welcome-logo-row span em {
-      color: var(--purpleL);
-      font-style: normal;
     }
 
     .welcome-modal h2 {
@@ -353,20 +337,10 @@
     }
 
     .auth-logo-row img {
-      width: 36px;
+      width: auto;
       height: 36px;
     }
 
-    .auth-logo-row span {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--text);
-    }
-
-    .auth-logo-row span em {
-      color: var(--purpleL);
-      font-style: normal;
-    }
 
     .auth-tabs {
       display: flex;
@@ -597,7 +571,7 @@
     }
 
     .sb-logo img {
-      width: 36px;
+      width: auto;
       height: 36px;
     }
 
@@ -2218,15 +2192,11 @@
     }
 
     .ft-brand img {
-      width: 30px;
-      height: 30px;
+      width: auto;
+      height: 40px;
     }
 
-    .ft-brand span {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--text);
-    }
+
 
     .ft-tag {
       font-size: 13px;
@@ -6431,15 +6401,15 @@
   <!-- LOADING -->
   <div id="loading">
     <img src="logo/bloxbolt_logo_new_3.png" alt="Bloxbolt" onerror="this.style.opacity='0'">
-    <span>Loading...</span>
+
   </div>
 
   <!-- ─── WELCOME POPUP ─── -->
   <div id="welcome-overlay">
     <div class="welcome-modal">
       <div class="welcome-logo-row">
-        <img src="logo/bloxbolt_logo_new_3.png" alt="Bloxbolt" onerror="this.style.display='none'">
-        <span>Blox<em style="color:var(--purpleL);font-style:normal;">bolt</em></span>
+        <img src="logo/bloxbolt_logo_new_2.png" alt="Bloxbolt" onerror="this.style.display='none'">
+
       </div>
       <h2>Welcome to Bloxbolt</h2>
       <div class="welcome-block">
@@ -6463,9 +6433,8 @@
   <div id="auth-overlay">
     <div class="auth-modal">
       <div class="auth-logo-row">
-        <img src="logo/bloxbolt_logo_new_3.png" alt="Bloxbolt" style="width:36px;height:36px;"
-          onerror="this.style.display='none'">
-        <span>Blox<em style="color:var(--purpleL);font-style:normal;">bolt</em></span>
+        <img src="logo/bloxbolt_logo_new_2.png" alt="Bloxbolt" onerror="this.style.display='none'">
+
       </div>
       <div class="auth-tabs">
         <button class="atab active" id="tab-login" onclick="switchAuthTab('login')">Login</button>
@@ -6534,7 +6503,7 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-logo">
-      <img src="logo/bloxbolt_logo_new_3.png" alt="" onerror="this.style.opacity='0'">
+      <img src="logo/bloxbolt_logo_new_2.png" alt="" onerror="this.style.opacity='0'">
     </div>
     <a class="sb-item active" data-page="home" title="Home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -6763,13 +6732,7 @@
           <div class="rew-left reveal">
 
             <!-- BADGE + TITLE -->
-            <div
-              style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--yellow);margin-bottom:16px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-              </svg>
-              Rewards Program
-            </div>
+
 
             <h2
               style="font-size:clamp(26px,3.5vw,38px);font-weight:900;line-height:1.1;color:var(--text);margin-bottom:8px;">
@@ -7164,32 +7127,47 @@
       </section>
 
       <!-- FOOTER -->
+      <!-- FOOTER -->
       <footer>
-        <div class="ft-grid">
+        <div class="ft-grid" style="grid-template-columns: 1.6fr 1fr 1fr 1.6fr;">
           <div>
-            <div class="ft-brand"><img src="logo/bloxbolt_logo_new_3.png" alt=""><span>Bloxbolt</span></div>
-            <p class="ft-tag">The #1 Robux Marketplace</p>
-            <div class="ft-social">
-              <a class="socbtn"><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z" />
-                </svg>Join Discord</a>
-              <a class="socbtn"><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>Follow @bloxbolt</a>
+            <div class="ft-brand">
+              <img src="logo/bloxbolt_logo_new_2.png" alt="">
             </div>
+
+            <p class="ft-tag" style="margin-top:10px">Legal: <a href="mailto:legal@bloxbolt.com"
+                style="color:var(--purpleL);text-decoration:underline;">support@bloxbolt.com</a></p>
           </div>
           <div class="ft-col">
-            <h4>Quick Links</h4><a data-page="marketplace">Marketplace</a><a data-page="events">Events</a><a
-              data-page="rewards">Rewards</a><a data-page="tasks">Creator Tasks</a><a data-page="spin">Daily Spin</a><a
-              data-page="partners">Partners</a><a data-page="vip">VIP</a><a data-page="settings-user">Settings</a>
-          </div>
-          <div class="ft-col">
-            <h4>Legal</h4>
+            <h4>About</h4>
             <a data-page="terms">Terms of Service</a>
             <a data-page="privacy">Privacy Policy</a>
             <a data-page="refund">Refund Policy</a>
+          </div>
+          <div class="ft-col">
+            <h4>Help</h4>
+            <a data-page="support">Live Support</a>
+            <a data-page="faq">FAQ</a>
+          </div>
+          <div>
+            <h4
+              style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">
+              Disclaimer</h4>
+            <p class="ft-tag">Bloxbolt.com is not affiliated with, endorsed by, or sponsored by Roblox Corporation. All
+              trademarks and copyrights belong to their respective owners. Rewards offered on this platform are
+              independently managed and may require users to complete tasks or offers. We do not guarantee instant
+              delivery of rewards and reserve the right to modify or cancel offers at any time. By using this platform,
+              you agree to comply with our terms and policies.</p>
+            <div class="ft-social" style="margin-top:14px">
+              <a class="socbtn"><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z" />
+                </svg></a>
+              <a class="socbtn"><svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg></a>
+            </div>
           </div>
         </div>
         <div class="ft-bot">
