@@ -12039,8 +12039,8 @@
         }
 
         .top3-card {
-          background: #12183a;
-          border: 1.5px solid #1e2550;
+          background: rgba(18, 24, 58, 0.45);
+          border: 1.5px rgba(255, 255, 255, 0.06);
           border-radius: 16px;
           padding: 0 0 22px;
           display: flex;
@@ -12059,10 +12059,11 @@
         }
 
         .top3-card.r1 {
-          border-color: #2e3870;
+          border-color: rgba(168, 85, 247, 0.45);
+          background: linear-gradient(160deg, rgba(168, 85, 247, 0.06), rgba(168, 85, 247, 0.01));
           min-height: 310px;
           transform: translateY(-18px);
-          box-shadow: 0 0 40px rgba(168, 85, 247, 0.15);
+          box-shadow: 0 0 40px rgba(168, 85, 247, 0.04);
         }
 
         .top3-card.r1:hover {
@@ -12070,11 +12071,13 @@
         }
 
         .top3-card.r2 {
-          border-color: rgba(148, 163, 184, 0.3);
+          border-color: rgba(148, 163, 184, 0.35);
+          background: linear-gradient(160deg, rgba(148, 163, 184, 0.04), rgba(148, 163, 184, 0.01));
         }
 
         .top3-card.r3 {
-          border-color: rgba(205, 127, 50, 0.3);
+          border-color: rgba(205, 127, 50, 0.4);
+          background: linear-gradient(160deg, rgba(205, 127, 50, 0.04), rgba(205, 127, 50, 0.01));
         }
 
         .top3-place-badge {
@@ -12112,18 +12115,6 @@
           height: 180px;
           border-radius: 50%;
           pointer-events: none;
-        }
-
-        .r1 .top3-glow {
-          background: radial-gradient(circle, rgba(168, 85, 247, 0.22), transparent 65%);
-        }
-
-        .r2 .top3-glow {
-          background: radial-gradient(circle, rgba(148, 163, 184, 0.15), transparent 65%);
-        }
-
-        .r3 .top3-glow {
-          background: radial-gradient(circle, rgba(205, 127, 50, 0.15), transparent 65%);
         }
 
         .top3-badge {
@@ -12176,11 +12167,11 @@
         }
 
         .r2 .top3-av-glow {
-          background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(148, 163, 184, 0.12) 0%, transparent 70%);
         }
 
         .r3 .top3-av-glow {
-          background: radial-gradient(circle, rgba(205, 127, 50, 0.25) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(205, 127, 50, 0.12) 0%, transparent 70%);
         }
 
         .top3-crown {
@@ -12203,7 +12194,7 @@
           width: 70px;
           height: 70px;
           border: 2px solid #a855f7;
-          box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
+          box-shadow: 0 0 14px rgba(168, 85, 247, 0.1);
         }
 
         .r2 .top3-av {
@@ -15689,28 +15680,29 @@
             : `-${gap.toLocaleString()} pts behind #1`;
           diffHtml = `<div class="top3-diff neg">${gapStr}</div>`;
         }
+        const crownSvg = {
+          1: `<svg width="30" height="30" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path fill="#F5C842" d="M512,152.469c0-21.469-17.422-38.875-38.891-38.875c-21.484,0-38.906,17.406-38.906,38.875c0,10.5,4.172,20.016,10.938,27c-26.453,54.781-77.016,73.906-116.203,56.594c-34.906-15.438-47.781-59.563-52.141-93.75c14.234-7.484,23.938-22.391,23.938-39.594C300.734,78.016,280.719,58,256,58c-24.703,0-44.734,20.016-44.734,44.719c0,17.203,9.703,32.109,23.938,39.594c-4.359,34.188-17.234,78.313-52.141,93.75c-39.188,17.313-89.75-1.813-116.203-56.594c6.766-6.984,10.938-16.5,10.938-27c0-21.469-17.422-38.875-38.891-38.875C17.422,113.594,0,131,0,152.469c0,19.781,14.781,36.078,33.875,38.547l44.828,164.078h354.594l44.828-164.078C497.234,188.547,512,172.25,512,152.469z"/><path fill="#F5C842" d="M455.016,425.063c0,15.984-12.953,28.938-28.953,28.938H85.938C69.953,454,57,441.047,57,425.063v-2.406c0-16,12.953-28.953,28.938-28.953h340.125c16,0,28.953,12.953,28.953,28.953V425.063z"/></g></svg>`,
+          2: `<svg width="26" height="26" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path fill="#94a3b8" d="M512,152.469c0-21.469-17.422-38.875-38.891-38.875c-21.484,0-38.906,17.406-38.906,38.875c0,10.5,4.172,20.016,10.938,27c-26.453,54.781-77.016,73.906-116.203,56.594c-34.906-15.438-47.781-59.563-52.141-93.75c14.234-7.484,23.938-22.391,23.938-39.594C300.734,78.016,280.719,58,256,58c-24.703,0-44.734,20.016-44.734,44.719c0,17.203,9.703,32.109,23.938,39.594c-4.359,34.188-17.234,78.313-52.141,93.75c-39.188,17.313-89.75-1.813-116.203-56.594c6.766-6.984,10.938-16.5,10.938-27c0-21.469-17.422-38.875-38.891-38.875C17.422,113.594,0,131,0,152.469c0,19.781,14.781,36.078,33.875,38.547l44.828,164.078h354.594l44.828-164.078C497.234,188.547,512,172.25,512,152.469z"/><path fill="#94a3b8" d="M455.016,425.063c0,15.984-12.953,28.938-28.953,28.938H85.938C69.953,454,57,441.047,57,425.063v-2.406c0-16,12.953-28.953,28.938-28.953h340.125c16,0,28.953,12.953,28.953,28.953V425.063z"/></g></svg>`,
+          3: `<svg width="26" height="26" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path fill="#cd7f32" d="M512,152.469c0-21.469-17.422-38.875-38.891-38.875c-21.484,0-38.906,17.406-38.906,38.875c0,10.5,4.172,20.016,10.938,27c-26.453,54.781-77.016,73.906-116.203,56.594c-34.906-15.438-47.781-59.563-52.141-93.75c14.234-7.484,23.938-22.391,23.938-39.594C300.734,78.016,280.719,58,256,58c-24.703,0-44.734,20.016-44.734,44.719c0,17.203,9.703,32.109,23.938,39.594c-4.359,34.188-17.234,78.313-52.141,93.75c-39.188,17.313-89.75-1.813-116.203-56.594c6.766-6.984,10.938-16.5,10.938-27c0-21.469-17.422-38.875-38.891-38.875C17.422,113.594,0,131,0,152.469c0,19.781,14.781,36.078,33.875,38.547l44.828,164.078h354.594l44.828-164.078C497.234,188.547,512,172.25,512,152.469z"/><path fill="#cd7f32" d="M455.016,425.063c0,15.984-12.953,28.938-28.953,28.938H85.938C69.953,454,57,441.047,57,425.063v-2.406c0-16,12.953-28.953,28.938-28.953h340.125c16,0,28.953,12.953,28.953,28.953V425.063z"/></g></svg>`,
+        };
         return `<div class="top3-card ${rankClass[i]}">
       <div class="top3-glow"></div>
-      <div class="top3-place-badge">${badgeLabels[rank]}</div>
-      <div class="top3-badge">${rank}</div>
+      
       <div class="top3-av-wrap">
       <div class="top3-av-glow"></div>
-      ${rank === 1 ? '<div class="top3-crown">👑</div>' : ''}
+      <div class="top3-crown">${crownSvg[rank]}</div>
       <img class="top3-av" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" alt="">
       </div>
       <div class="top3-name">${u.username}${u.isYou ? ` <span style="font-size:10px;color:var(--purpleL);">(You)</span>` : ''}</div>
       <div class="top3-tier" style="color:${cfg.color}">Level ${u.level} — ${u.tier}</div>
-      <div class="top3-pts-lbl">${lb2Tab === 'daily' ? 'Today' : 'Total Points'}</div>
-      <div class="top3-pts">${uPts.toLocaleString()}</div>
       <div style="width:85%;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;margin-bottom:12px;box-sizing:border-box;text-align:left;">
       <div style="color:var(--text3);font-size:11px;margin-bottom:3px;">Total Points:</div>
-      <div style="color:var(--text);font-size:13px;font-weight:600;">🪙 ${uPts.toLocaleString()}</div>
+      <div style="color:var(--text);font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;"><img src="coin/blox_coin_2.png" alt="" style="width:16px;height:16px;object-fit:contain;">${uPts.toLocaleString()}</div>
       </div>
       <div class="top3-reward">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
         ${LB2_REWARDS[rank - 1] || ''}
       </div>
-      ${diffHtml}
     </div>`;
       }).join('');
 
