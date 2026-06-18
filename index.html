@@ -6620,18 +6620,13 @@
         </svg>
         Leaderboard
       </a>
-      <a class="tnav-link" data-page="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-        </svg>
-        Dashboard
-      </a>
+
     </div>
     <div class="tnav-spacer"></div>
-    <div class="online-pill">
+    <!-- <div class="online-pill">
       <span class="dot-green"></span>
       <strong>1,847</strong>&nbsp;online now
-    </div>
+    </div> -->
     <div class="nav-pts" data-page="rewards" style="cursor:pointer">
       <img src="coin/blox_coin_2.png" alt="pts">
       <span id="nav-pts-val">1,250</span>
@@ -12011,50 +12006,51 @@
       <style>
         .lb2-tabs {
           display: flex;
-          gap: 4px;
-          background: var(--card2);
-          border: 1px solid var(--border);
-          border-radius: 10px;
-          padding: 4px;
+          gap: 6px;
           width: fit-content;
         }
 
         .lb2-tab {
           padding: 8px 22px;
-          border-radius: 7px;
+          border-radius: 20px;
           font-size: 13px;
           font-weight: 700;
-          background: transparent;
-          border: none;
+          background: #1a2140;
+          border: 1px solid #2a3160;
           cursor: pointer;
-          color: var(--text3);
-          transition: all 0.2s;
+          color: #8899bb;
+          transition: all 0.15s;
           font-family: var(--font);
         }
 
         .lb2-tab.active {
           background: var(--purple);
           color: #fff;
+          border-color: transparent;
           box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
         }
 
         .top3-wrap {
           display: grid;
           grid-template-columns: 1fr 1.12fr 1fr;
-          gap: 14px;
-          margin-bottom: 24px;
+          gap: 16px;
+          margin-bottom: 28px;
           align-items: end;
         }
 
         .top3-card {
-          background: var(--card);
-          border: 1px solid var(--border);
-          border-radius: 20px;
-          padding: 28px 20px 22px;
+          background: #12183a;
+          border: 1.5px solid #1e2550;
+          border-radius: 16px;
+          padding: 0 0 22px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           position: relative;
-          overflow: hidden;
+          overflow: visible;
           transition: transform 0.25s, box-shadow 0.25s;
           cursor: default;
+          min-height: 280px;
         }
 
         .top3-card:hover {
@@ -12063,18 +12059,49 @@
         }
 
         .top3-card.r1 {
-          border-color: rgba(124, 58, 237, 0.5);
-          background: linear-gradient(160deg, rgba(124, 58, 237, 0.14), rgba(124, 58, 237, 0.03));
+          border-color: #2e3870;
+          min-height: 310px;
+          transform: translateY(-18px);
+          box-shadow: 0 0 40px rgba(168, 85, 247, 0.15);
+        }
+
+        .top3-card.r1:hover {
+          transform: translateY(-23px);
         }
 
         .top3-card.r2 {
-          border-color: rgba(148, 163, 184, 0.4);
-          background: linear-gradient(160deg, rgba(148, 163, 184, 0.08), rgba(148, 163, 184, 0.02));
+          border-color: rgba(148, 163, 184, 0.3);
         }
 
         .top3-card.r3 {
-          border-color: rgba(205, 127, 50, 0.4);
-          background: linear-gradient(160deg, rgba(205, 127, 50, 0.08), rgba(205, 127, 50, 0.02));
+          border-color: rgba(205, 127, 50, 0.3);
+        }
+
+        .top3-place-badge {
+          position: absolute;
+          top: -14px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-weight: 800;
+          font-size: 11px;
+          padding: 4px 14px;
+          border-radius: 20px;
+          white-space: nowrap;
+          letter-spacing: 0.5px;
+          color: #111;
+        }
+
+        .r1 .top3-place-badge {
+          background: #a855f7;
+          color: #fff;
+        }
+
+        .r2 .top3-place-badge {
+          background: #94a3b8;
+        }
+
+        .r3 .top3-place-badge {
+          background: #cd7f32;
         }
 
         .top3-glow {
@@ -12088,7 +12115,7 @@
         }
 
         .r1 .top3-glow {
-          background: radial-gradient(circle, rgba(124, 58, 237, 0.22), transparent 65%);
+          background: radial-gradient(circle, rgba(168, 85, 247, 0.22), transparent 65%);
         }
 
         .r2 .top3-glow {
@@ -12131,25 +12158,64 @@
           border: 1px solid rgba(205, 127, 50, 0.4);
         }
 
+        .top3-av-wrap {
+          position: relative;
+          margin-top: 40px;
+          margin-bottom: 12px;
+        }
+
+        .top3-av-glow {
+          position: absolute;
+          inset: -18px;
+          border-radius: 50%;
+          pointer-events: none;
+        }
+
+        .r1 .top3-av-glow {
+          background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 70%);
+        }
+
+        .r2 .top3-av-glow {
+          background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, transparent 70%);
+        }
+
+        .r3 .top3-av-glow {
+          background: radial-gradient(circle, rgba(205, 127, 50, 0.25) 0%, transparent 70%);
+        }
+
+        .top3-crown {
+          position: absolute;
+          top: -20px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 20px;
+          line-height: 1;
+        }
+
         .top3-av {
-          width: 60px;
-          height: 60px;
-          border-radius: 15px;
-          margin: 0 auto 12px;
           display: block;
+          border-radius: 50%;
+          position: relative;
+          z-index: 1;
         }
 
         .r1 .top3-av {
-          border: 2px solid rgba(124, 58, 237, 0.6);
-          box-shadow: 0 0 18px rgba(124, 58, 237, 0.25);
+          width: 70px;
+          height: 70px;
+          border: 2px solid #a855f7;
+          box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
         }
 
         .r2 .top3-av {
-          border: 2px solid rgba(148, 163, 184, 0.5);
+          width: 60px;
+          height: 60px;
+          border: 2px solid #94a3b8;
         }
 
         .r3 .top3-av {
-          border: 2px solid rgba(205, 127, 50, 0.5);
+          width: 60px;
+          height: 60px;
+          border: 2px solid #cd7f32;
         }
 
         .top3-name {
@@ -12161,6 +12227,9 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          padding: 0 16px;
+          width: 100%;
+          box-sizing: border-box;
         }
 
         .top3-tier {
@@ -12189,7 +12258,7 @@
         }
 
         .r1 .top3-pts {
-          color: var(--purpleL);
+          color: #a855f7;
         }
 
         .r2 .top3-pts {
@@ -12206,16 +12275,18 @@
           justify-content: center;
           gap: 6px;
           border-radius: 9px;
-          padding: 9px;
+          padding: 9px 16px;
           font-size: 14px;
           font-weight: 800;
-          margin-bottom: 10px;
+          margin: 0 16px 10px;
+          width: calc(100% - 32px);
+          box-sizing: border-box;
         }
 
         .r1 .top3-reward {
-          background: rgba(124, 58, 237, 0.13);
-          border: 1px solid rgba(124, 58, 237, 0.28);
-          color: var(--purpleL);
+          background: rgba(168, 85, 247, 0.13);
+          border: 1px solid rgba(168, 85, 247, 0.28);
+          color: #a855f7;
         }
 
         .r2 .top3-reward {
@@ -12235,16 +12306,18 @@
           font-weight: 600;
           text-align: center;
           color: var(--text3);
+          padding: 0 16px;
         }
 
         .top3-diff.neg {
-          color: var(--red);
+          color: #f87171;
         }
 
         .top3-diff.top {
-          color: var(--purpleL);
+          color: #a855f7;
         }
 
+        /* Rest of existing CSS same rakho */
         .lb2-you {
           background: linear-gradient(135deg, rgba(124, 58, 237, 0.09), rgba(124, 58, 237, 0.03));
           border: 1px solid rgba(124, 58, 237, 0.28);
@@ -15593,6 +15666,8 @@
       const rankClass = ['r2', 'r1', 'r3'];
       const rankNum = [2, 1, 3];
 
+      const badgeLabels = { 1: '1ST PLACE', 2: '2ND PLACE', 3: '3RD PLACE' };
+
       top3El.innerHTML = order.map((u, i) => {
         if (!u) {
           return `<div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 20px 22px;opacity:0.35;text-align:center;">
@@ -15616,12 +15691,21 @@
         }
         return `<div class="top3-card ${rankClass[i]}">
       <div class="top3-glow"></div>
+      <div class="top3-place-badge">${badgeLabels[rank]}</div>
       <div class="top3-badge">${rank}</div>
+      <div class="top3-av-wrap">
+      <div class="top3-av-glow"></div>
+      ${rank === 1 ? '<div class="top3-crown">👑</div>' : ''}
       <img class="top3-av" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" alt="">
+      </div>
       <div class="top3-name">${u.username}${u.isYou ? ` <span style="font-size:10px;color:var(--purpleL);">(You)</span>` : ''}</div>
       <div class="top3-tier" style="color:${cfg.color}">Level ${u.level} — ${u.tier}</div>
       <div class="top3-pts-lbl">${lb2Tab === 'daily' ? 'Today' : 'Total Points'}</div>
       <div class="top3-pts">${uPts.toLocaleString()}</div>
+      <div style="width:85%;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;margin-bottom:12px;box-sizing:border-box;text-align:left;">
+      <div style="color:var(--text3);font-size:11px;margin-bottom:3px;">Total Points:</div>
+      <div style="color:var(--text);font-size:13px;font-weight:600;">🪙 ${uPts.toLocaleString()}</div>
+      </div>
       <div class="top3-reward">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
         ${LB2_REWARDS[rank - 1] || ''}
