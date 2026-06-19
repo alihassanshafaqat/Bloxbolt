@@ -15718,41 +15718,40 @@
       }).join('');
 
       // ── YOUR POSITION ──
-      if (!cu) {
-        youEl.innerHTML = `<div style="background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-radius:14px;padding:16px 22px;margin-bottom:24px;font-size:13px;color:var(--text3);">
-      Log in to see your position on the leaderboard.
-    </div>`;
-      } else {
-        const myIdx = data.findIndex(u => u.isYou);
-        const myRank = myIdx >= 0 ? myIdx + 1 : null;
-        const myU = myIdx >= 0 ? data[myIdx] : null;
-        const myPts = myU ? lb2GetDisplayPts(myU) : 0;
-        const myXpU = myU || { level: 1, tier: 'Bronze', xp: 0 };
-        const cfg = LB2_TIER_CFG[myXpU.tier] || LB2_TIER_CFG.Bronze;
-        let goalText = '';
-        if (myRank !== null) {
-          if (myRank <= 3) goalText = 'You are in the Top 3 — defend your position!';
-          else if (myRank <= 10) goalText = 'You are in the Top 10 — push for Top 3!';
-          else {
-            const top3minPts = top3[2] ? lb2GetDisplayPts(top3[2]) : 0;
-            const gap = top3minPts - myPts + 1;
-            goalText = gap > 0 ? `+${gap.toLocaleString()} pts to reach Top 3` : 'You are close to Top 3!';
-          }
-        }
-        youEl.innerHTML = `<div class="lb2-you">
-      <div class="lb2-you-rank">${myRank !== null ? '#' + myRank : '—'}<small>Rank</small></div>
-      <div class="lb2-divider"></div>
-      <div class="lb2-you-info">
-        <div class="lb2-you-name">${cu.username}</div>
-        <div class="lb2-you-sub" style="color:${cfg.color}">Level ${myXpU.level} — ${myXpU.tier}</div>
-        ${goalText ? `<div class="lb2-you-goal">${goalText}</div>` : ''}
-      </div>
-      <div class="lb2-you-pts">
-        <span class="lb2-you-pts-val">${myPts.toLocaleString()}</span>
-        <span class="lb2-you-pts-lbl">Your Points</span>
-      </div>
-    </div>`;
-      }
+    //   if (!cu) {
+    //     youEl.innerHTML = ``;
+    //   } else {
+    //     const myIdx = data.findIndex(u => u.isYou);
+    //     const myRank = myIdx >= 0 ? myIdx + 1 : null;
+    //     const myU = myIdx >= 0 ? data[myIdx] : null;
+    //     const myPts = myU ? lb2GetDisplayPts(myU) : 0;
+    //     const myXpU = myU || { level: 1, tier: 'Bronze', xp: 0 };
+    //     const cfg = LB2_TIER_CFG[myXpU.tier] || LB2_TIER_CFG.Bronze;
+    //     let goalText = '';
+    //     if (myRank !== null) {
+    //       if (myRank <= 3) goalText = 'You are in the Top 3 — defend your position!';
+    //       else if (myRank <= 10) goalText = 'You are in the Top 10 — push for Top 3!';
+    //       else {
+    //         const top3minPts = top3[2] ? lb2GetDisplayPts(top3[2]) : 0;
+    //         const gap = top3minPts - myPts + 1;
+    //         goalText = gap > 0 ? `+${gap.toLocaleString()} pts to reach Top 3` : 'You are close to Top 3!';
+    //       }
+    //     }
+    //     youEl.innerHTML = `<div class="lb2-you">
+    //   <div class="lb2-you-rank">${myRank !== null ? '#' + myRank : '—'}<small>Rank</small></div>
+    //   <div class="lb2-divider"></div>
+    //   <div class="lb2-you-info">
+    //     <div class="lb2-you-name">${cu.username}</div>
+    //     <div class="lb2-you-sub" style="color:${cfg.color}">Level ${myXpU.level} — ${myXpU.tier}</div>
+    //     ${goalText ? `<div class="lb2-you-goal">${goalText}</div>` : ''}
+    //   </div>
+    //   <div class="lb2-you-pts">
+    //     <span class="lb2-you-pts-val">${myPts.toLocaleString()}</span>
+    //     <span class="lb2-you-pts-lbl">Your Points</span>
+    //   </div>
+    // </div>`;
+    //   }
+    youEl.innerHTML = '';
 
       // ── TABLE (rank 4+) ──
       const tableData = data.slice(3);
