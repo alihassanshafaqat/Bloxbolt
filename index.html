@@ -12429,22 +12429,21 @@
         }
 
         .lb2-tbl th {
+          background: transparent;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          color: rgba(255, 255, 255, 0.3);
           font-size: 10px;
           font-weight: 700;
-          letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: var(--text3);
+          letter-spacing: 2px;
           padding: 10px 16px;
-          text-align: left;
-          border-bottom: 1px solid var(--border);
         }
 
         .lb2-tbl td {
-          padding: 11px 16px;
-          border-bottom: 1px solid rgba(37, 37, 69, 0.35);
-          vertical-align: middle;
-          font-size: 13px;
-          color: var(--text2);
+          padding: 14px 16px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+          color: var(--text);
+          font-size: 14px;
         }
 
         .lb2-tbl tr:last-child td {
@@ -12452,7 +12451,7 @@
         }
 
         .lb2-tbl tr:hover td {
-          background: rgba(255, 255, 255, 0.012);
+          background: rgba(255, 255, 255, 0.03);
         }
 
         .lb2-tbl tr.you-row td {
@@ -12587,7 +12586,7 @@
         }
       </style>
 
-      <div
+      <!-- <div
         style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:28px;">
         <div>
           <div style="font-size:36px;font-weight:900;letter-spacing:-1.2px;margin-bottom:5px;">Leaderboard</div>
@@ -12614,9 +12613,26 @@
             </div>
           </div>
         </div>
+      </div> -->
+      <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:32px;">
+        <!-- LEADERBOARD title with arrows -->
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+          <div style="height:1px;width:60px;background:linear-gradient(to left,#22c55e,transparent);"></div>
+          <div style="font-size:32px;font-weight:900;letter-spacing:4px;color:#fff;text-transform:uppercase;">
+            LEADERBOARD</div>
+          <div style="height:1px;width:60px;background:linear-gradient(to right,#22c55e,transparent);"></div>
+        </div>
+        <!-- Timer -->
+        <div
+          style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 20px;font-size:14px;font-weight:700;color:var(--text);letter-spacing:1px;">
+          Ends in <span style="font-family:monospace;color:#fff;">
+            <span id="lb2-td">00</span>:<span id="lb2-th">00</span>:<span id="lb2-tm">00</span>:<span
+              id="lb2-ts">00</span>
+          </span>
+        </div>
       </div>
 
-      <div
+      <!-- <div
         style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
         <div class="lb2-tabs">
           <button class="lb2-tab active" onclick="lb2SetTab(this,'weekly')">Weekly</button>
@@ -12624,17 +12640,12 @@
           <button class="lb2-tab" onclick="lb2SetTab(this,'alltime')">All Time</button>
         </div>
         <div style="font-size:12px;color:var(--text3);" id="lb2-count-lbl"></div>
-      </div>
+      </div> -->
 
       <div id="lb2-top3-wrap" class="top3-wrap"></div>
       <div id="lb2-you-wrap"></div>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
-        <div style="padding:16px 20px;border-bottom:1px solid var(--border);">
-          <div style="font-size:15px;font-weight:700;color:var(--text);">Full Rankings</div>
-        </div>
-        <div id="lb2-table-wrap"></div>
-      </div>
+      <div id="lb2-table-wrap"></div>
 
     </div>
   </div>
@@ -15700,9 +15711,9 @@
       <div style="color:var(--text);font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;"><img src="coin/blox_coin_2.png" alt="" style="width:16px;height:16px;object-fit:contain;">${uPts.toLocaleString()}</div>
       </div>
       <div class="top3-reward">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-        ${LB2_REWARDS[rank - 1] || ''}
-      </div>
+  <img src="coin/blox_coin_2.png" style="width:16px;height:16px;object-fit:contain;">
+  0
+</div>
     </div>`;
       }).join('');
 
@@ -15751,36 +15762,35 @@
       }
       const rankClasses = ['r1c', 'r2c', 'r3c'];
       tblEl.innerHTML = `<table class="lb2-tbl">
-    <thead><tr>
-      <th style="width:48px;">#</th>
-      <th>Player</th>
-      <th style="width:100px;">Tier</th>
-      <th style="width:130px;">XP Progress</th>
-      <th style="width:100px;text-align:right;">Points</th>
-    </tr></thead>
-    <tbody>${tableData.map((u, i) => {
+  <thead><tr>
+    <th style="width:18%;text-align:left;">Place</th>
+<th style="width:40%;text-align:left;">User</th>
+<th style="width:25%;text-align:left;">Wagered</th>
+<th style="width:20%;text-align:right;">Prize</th>
+  </tr></thead>
+  <tbody>${tableData.map((u, i) => {
         const rank = i + 4;
         const isYou = !!u.isYou;
-        const cfg = LB2_TIER_CFG[u.tier] || LB2_TIER_CFG.Bronze;
-        const pct = lb2XpPct(u);
         const uPts = lb2GetDisplayPts(u);
         const seed = encodeURIComponent(u.username);
-        return `<tr class="${isYou ? 'you-row' : ''}">
-        <td><span class="lb2-rn">${rank}</span></td>
-        <td><div class="lb2-urow">
-          <img class="lb2-uav" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" alt="">
-          <span class="lb2-un">${u.username}</span>
-          ${isYou ? '<span class="lb2-ytag">You</span>' : ''}
-        </div></td>
-        <td><span class="lb2-tier-pill" style="background:${cfg.bg};color:${cfg.color};">Lv ${u.level} ${u.tier}</span></td>
-        <td><div class="lb2-xpbar-wrap">
-          <div class="lb2-xpbar-lbl">${u.xp.toLocaleString()} XP &bull; ${pct}%</div>
-          <div class="lb2-xpbar"><div class="lb2-xpfill" style="width:${pct}%;background:${cfg.color};"></div></div>
-        </div></td>
-        <td class="lb2-pts-val">${uPts.toLocaleString()}</td>
-      </tr>`;
+        return `<tr class="${isYou ? 'you-row' : ''}" style="margin-bottom:8px;">
+      <td><span class="lb2-rn" style="font-size:14px;font-weight:800;color:var(--text2);">#${rank}</span></td>
+      <td><div class="lb2-urow">
+        <img class="lb2-uav" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" alt="">
+        <span class="lb2-un">${u.username}</span>
+        ${isYou ? '<span class="lb2-ytag">You</span>' : ''}
+      </div></td>
+      <td style="color:var(--text2);font-size:13px;">
+  <img src="coin/blox_coin_2.png" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;">${uPts.toLocaleString()}
+</td>
+      <td style="text-align:right;font-size:13px;font-weight:700;">
+  <span style="background:rgba(30,30,50,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px 10px;color:#22c55e;display:inline-flex;align-items:center;gap:4px;">
+    <img src="coin/blox_coin_2.png" style="width:14px;height:14px;">0
+  </span>
+</td>
+    </tr>`;
       }).join('')}</tbody>
-  </table>`;
+</table>`;
     }
 
     function lb2StartTimer() {
