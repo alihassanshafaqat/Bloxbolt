@@ -10877,8 +10877,8 @@
         }
 
         .acc-btn-green {
-          background: #3BE077;
-          color: #0B1F12;
+          background: #7c3aed;
+          color: #fff;
         }
 
         .acc-btn-green:hover {
@@ -10944,12 +10944,12 @@
         }
 
         .acc-toggle input:checked+.acc-toggle-slider {
-          background: #3BE077;
+          background: #a855f7;
         }
 
         .acc-toggle input:checked+.acc-toggle-slider::before {
           transform: translateX(20px);
-          background: #0B1F12;
+          background: #fff;
         }
 
         .acc-input {
@@ -11032,9 +11032,9 @@
         }
 
         .acc-lang-btn.active {
-          background: rgba(59, 224, 119, 0.12);
-          border-color: rgba(59, 224, 119, 0.4);
-          color: #3BE077;
+          background: rgba(168, 85, 247, 0.12);
+          border-color: rgba(168, 85, 247, 0.4);
+          color: #a855f7;
         }
 
         .acc-vip-grid {
@@ -11096,12 +11096,7 @@
             </svg>
             Profile
           </button>
-          <button class="acc-tab" onclick="accSetTab(this,'security')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-            Security
-          </button>
+
           <button class="acc-tab" onclick="accSetTab(this,'vip')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M2 20h20M5 20l2-8 5 5 5-5 2 8" />
@@ -11126,12 +11121,12 @@
           <div class="acc-card">
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
               <img id="acc-prof-avatar" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Guest"
-                style="width:68px;height:68px;border-radius:50%;border:2px solid #3BE077;" alt="">
+                style="width:68px;height:68px;border-radius:50%;border:2px solid #7c3aed;" alt="">
               <div>
                 <div style="display:flex;align-items:center;gap:8px;">
                   <div style="font-size:18px;font-weight:900;color:var(--text);" id="acc-prof-username">—</div>
                   <span
-                    style="background:rgba(59,224,119,0.12);color:#3BE077;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">VIP</span>
+                    style="background:rgba(255,225,255,0.09);color:#a855f7;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">VIP</span>
                 </div>
                 <div style="font-size:12px;color:var(--text3);margin-top:3px;" id="acc-prof-email">—</div>
                 <div style="font-size:11px;color:var(--text3);margin-top:2px;" id="acc-prof-id">—</div>
@@ -11149,7 +11144,11 @@
                   onclick="navigator.clipboard.writeText(document.getElementById('acc-home-ref').textContent);showToast('Copied!','ok')">Copy</button>
               </div>
             </div>
-
+            <!-- Edite profile -->
+            <div>
+              <button class="acc-btn acc-btn-ghost" onclick="accEditProfile()" style="margin-bottom: 10px;">Edit
+                Profile</button>
+            </div>
             <!-- Global Rank -->
             <div
               style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:12px;">
@@ -11176,102 +11175,50 @@
             </div>
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
               <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;">
-                <div style="font-size:16px;font-weight:800;color:var(--text);">0</div>
-                <div style="font-size:11px;color:var(--text3);margin-top:3px;">Total bets</div>
+                <div style="display:flex;align-items:center;gap:5px;">
+                  <img src="coin/blox_coin_2.png" style="width: 18px;height: 18px;">
+                  <div style="font-size:16px;font-weight:800;color:var(--text);">0</div>
+                </div>
+                <div style="font-size:11px;color:var(--text3);margin-top:3px;">Today's earning</div>
               </div>
               <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;">
                 <div style="display:flex;align-items:center;gap:5px;">
-                  <img src="coin/blox_coin_2.png" style="width:14px;height:14px;">
+                  <img src="coin/blox_coin_2.png" style="width: 18px;height: 18px;">
                   <span style="font-size:16px;font-weight:800;color:var(--text);" id="acc-home-pts2">0</span>
                 </div>
-                <div style="font-size:11px;color:var(--text3);margin-top:3px;">Total wagered</div>
+                <div style="font-size:11px;color:var(--text3);margin-top:3px;">Points</div>
               </div>
               <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;">
                 <div style="display:flex;align-items:center;gap:5px;">
-                  <img src="coin/blox_coin_2.png" style="width:14px;height:14px;">
+                  <img src="coin/blox_coin_2.png" style="width: 18px;height: 18px;">
                   <span style="font-size:16px;font-weight:800;color:var(--text);">0</span>
                 </div>
-                <div style="font-size:11px;color:var(--text3);margin-top:3px;">Total deposited</div>
+                <div style="font-size:11px;color:var(--text3);margin-top:3px;">Lifetime earnings</div>
               </div>
               <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;">
                 <div style="display:flex;align-items:center;gap:5px;">
-                  <img src="coin/blox_coin_2.png" style="width:14px;height:14px;">
+                  <svg viewBox="0 -0.23095815491140392 24.000874817762764 26.591916309822807"
+                    xmlns="http://www.w3.org/2000/svg" width="14px" height="14px">
+                    <linearGradient id="a" gradientTransform="matrix(24 0 0 -26.1 531 1665.03)"
+                      gradientUnits="userSpaceOnUse" x1="-21.63" x2="-21.63" y1="63.75" y2="62.78">
+                      <stop offset="0" stop-color="#a855f7" />
+                      <stop offset=".59" stop-color="#a855f7" />
+                      <stop offset="1" stop-color="#a855f7" />
+                    </linearGradient>
+                    <path
+                      d="M21.4 4.62a5.2 5.2 0 0 1 2.6 4.5V17a5.19 5.19 0 0 1-2.6 4.5l-6.8 3.93a5.19 5.19 0 0 1-5.2 0l-6.8-3.95A5.19 5.19 0 0 1 0 17V9.12a5.2 5.2 0 0 1 2.6-4.5L9.4.7a5.19 5.19 0 0 1 5.2 0zM10.31 2.48L3.69 6.31A3.35 3.35 0 0 0 2 9.23v7.65a3.36 3.36 0 0 0 1.69 2.92l6.62 3.83a3.4 3.4 0 0 0 3.38 0l6.62-3.83A3.36 3.36 0 0 0 22 16.88V9.23a3.35 3.35 0 0 0-1.69-2.92l-6.62-3.83a3.4 3.4 0 0 0-3.38 0zm3.08 2.14l5.22 3A2.78 2.78 0 0 1 20 10v6a2.76 2.76 0 0 1-1.39 2.4l-5.22 3a2.76 2.76 0 0 1-2.78 0l-5.22-3A2.76 2.76 0 0 1 4 16.07V10a2.78 2.78 0 0 1 1.39-2.37l5.22-3a2.76 2.76 0 0 1 2.78 0zM9 16.05h6v-6H9z"
+                      fill="url(#a)" />
+                  </svg>
                   <span style="font-size:16px;font-weight:800;color:var(--text);">0</span>
                 </div>
                 <div style="font-size:11px;color:var(--text3);margin-top:3px;">Rewards claimed</div>
               </div>
             </div>
           </div>
-
-          <!-- Account Linking -->
+          <!-- Change password -->
           <div class="acc-card">
             <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
-                <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
-              </svg>
-              Account Linking
-            </div>
-            <div
-              style="background:rgba(91,141,239,0.1);border:1px solid rgba(91,141,239,0.3);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <svg width="20px" height="20px" viewBox="0 -28.5 256 256" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                  preserveAspectRatio="xMidYMid" fill="#000000">
-                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-                  <g id="SVGRepo_iconCarrier">
-                    <g>
-                      <path
-                        d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
-                        fill="#5865F2" fill-rule="nonzero"> </path>
-                    </g>
-                  </g>
-                </svg>
-                <div>
-                  <div style="font-size:13px;font-weight:700;color:var(--text);">Connect Discord</div>
-                  <div style="font-size:11px;color:var(--text3);">Link for faster login & notifications</div>
-                </div>
-              </div>
-              <button class="acc-btn" style="background:#5B8DEF;color:#fff;"
-                onclick="showToast('Discord connect: coming soon.','ok')">Connect</button>
-            </div>
-            <div
-              style="background:rgba(59,224,119,0.08);border:1px solid rgba(59,224,119,0.25);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3BE077" stroke-width="2">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span style="font-size:13px;color:var(--text);">Connected via Email login</span>
-            </div>
-          </div>
-
-          <!-- Danger Zone -->
-          <div class="acc-card" style="border-color:rgba(239,68,68,0.3);">
-            <div class="acc-card-title" style="color:var(--red);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-                  stroke="yellow" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
-              Danger Zone
-            </div>
-            <p style="font-size:13px;color:var(--text3);margin-bottom:14px;">Permanently delete your account. All data
-              will be erased and cannot be recovered.</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <button class="acc-btn acc-btn-ghost" onclick="accEditProfile()">Edit Profile</button>
-              <button class="acc-btn acc-btn-ghost" onclick="accChangePassword()">Change Password</button>
-              <button class="acc-btn acc-btn-red" onclick="accLogout()">Log Out</button>
-              <button class="acc-btn acc-btn-red" onclick="accDeleteAccount()">Delete Account</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECURITY TAB -->
-        <div id="acc-tab-security" class="acc-tab-content" style="display:none;">
-          <div class="acc-card">
-            <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
@@ -11285,10 +11232,10 @@
               <button class="acc-btn acc-btn-green" onclick="accChangePassword()">Change Password</button>
             </div>
           </div>
-
+          <!-- Tow step verificatin -->
           <div class="acc-card">
             <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               Two-Factor Authentication
@@ -11311,56 +11258,25 @@
             </div>
           </div>
 
-          <div class="acc-card">
-            <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" />
-                <line x1="8" y1="21" x2="16" y2="21" />
-                <line x1="12" y1="17" x2="12" y2="21" />
-              </svg>
-              Active Sessions
-            </div>
-            <div class="acc-session-row">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <div class="acc-session-icon" style="background:rgba(59,224,119,0.1);">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3BE077" stroke-width="2">
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                </div>
-                <div>
-                  <div style="font-size:13px;font-weight:700;color:var(--text);">This Browser <span
-                      class="acc-tag acc-tag-green" style="margin-left:6px;">THIS SESSION</span></div>
-                  <div style="font-size:11px;color:var(--text3);margin-top:2px;">Active now</div>
-                </div>
-              </div>
-            </div>
-            <div class="acc-session-row">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <div class="acc-session-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2">
-                    <rect x="5" y="2" width="14" height="20" rx="2" />
-                    <line x1="12" y1="18" x2="12.01" y2="18" />
-                  </svg>
-                </div>
-                <div>
-                  <div style="font-size:13px;font-weight:700;color:var(--text);">Mobile Device</div>
-                  <div style="font-size:11px;color:var(--text3);margin-top:2px;">2h ago</div>
-                </div>
-              </div>
-              <button class="acc-btn acc-btn-red" onclick="showToast('Session terminated.','ok')">Logout</button>
+          <!-- Danger Zone -->
+          <div style="margin-left: 10px;">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="acc-btn acc-btn-red" onclick="accLogout()">Log Out</button>
+              <button class="acc-btn acc-btn-red" onclick="accDeleteAccount()">Delete Account</button>
             </div>
           </div>
         </div>
 
+
+
         <!-- VIP TAB -->
         <div id="acc-tab-vip" class="acc-tab-content" style="display:none;">
+          <!-- Upgrade banner — remove border, gradient bg -->
           <div
-            style="background:rgba(240,180,41,0.1);border:1px solid rgba(240,180,41,0.3);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px;">
+            style="background:linear-gradient(180deg,rgba(240,180,41,0.13) 0%,transparent 100%);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px;">
             <div style="display:flex;align-items:center;gap:14px;">
               <div
-                style="width:44px;height:44px;background:rgba(240,180,41,0.15);border:1px solid rgba(240,180,41,0.3);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                style="width:44px;height:44px;background:rgba(240,180,41,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0b429" stroke-width="2">
                   <path d="M2 20h20M5 20l2-8 5 5 5-5 2 8" />
                   <circle cx="12" cy="8" r="2" />
@@ -11374,8 +11290,11 @@
             </div>
             <button class="acc-btn acc-btn-gold" data-page="vip">View VIP Details →</button>
           </div>
+
           <div class="acc-vip-grid">
-            <div class="acc-card">
+            <!-- VIP Basic -->
+            <div
+              style="background:linear-gradient(180deg,rgba(148,163,184,0.13) 0%,transparent 100%);border-radius:16px;padding:22px;position:relative;overflow:hidden;">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
                 <span style="font-size:14px;font-weight:800;color:var(--text);">VIP Basic</span>
                 <span style="font-size:18px;font-weight:900;color:var(--text);">$3.99<span
@@ -11386,18 +11305,20 @@
               <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">✓ 1 bonus spin per day</div>
               <button class="acc-btn acc-btn-ghost" style="width:100%;padding:10px;">Choose Basic</button>
             </div>
-            <div class="acc-card"
-              style="border-color:rgba(59,224,119,0.4);background:linear-gradient(160deg,rgba(59,224,119,0.06),var(--card));">
+
+            <!-- VIP Pro -->
+            <div
+              style="background:linear-gradient(180deg,rgba(167,139,250,0.18) 0%,transparent 100%);border-radius:16px;padding:22px;position:relative;overflow:hidden;">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
                 <span style="font-size:14px;font-weight:800;color:var(--text);">VIP Pro ⚡</span>
                 <span style="font-size:18px;font-weight:900;color:var(--text);">$7.99<span
                     style="font-size:11px;color:var(--text3);font-weight:400;">/mo</span></span>
               </div>
-              <div style="font-size:13px;color:#3BE077;margin-bottom:8px;">✓ +50% points on every task</div>
-              <div style="font-size:13px;color:#3BE077;margin-bottom:8px;">✓ Priority task access</div>
-              <div style="font-size:13px;color:#3BE077;margin-bottom:8px;">✓ 3 bonus spins per day</div>
-              <div style="font-size:13px;color:#3BE077;margin-bottom:14px;">✓ Exclusive events access</div>
-              <button class="acc-btn acc-btn-green" style="width:100%;padding:10px;">Choose Pro</button>
+              <div style="font-size:13px;color:#a78bfa;margin-bottom:8px;">✓ +50% points on every task</div>
+              <div style="font-size:13px;color:#a78bfa;margin-bottom:8px;">✓ Priority task access</div>
+              <div style="font-size:13px;color:#a78bfa;margin-bottom:8px;">✓ 3 bonus spins per day</div>
+              <div style="font-size:13px;color:#a78bfa;margin-bottom:14px;">✓ Exclusive events access</div>
+              <button class="acc-btn acc-btn-purple" style="width:100%;padding:10px;">Choose Pro</button>
             </div>
           </div>
         </div>
@@ -11406,7 +11327,7 @@
         <div id="acc-tab-prefs" class="acc-tab-content" style="display:none;">
           <div class="acc-card">
             <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
                 <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
                 <path d="M13.73 21a2 2 0 01-3.46 0" />
               </svg>
@@ -11451,7 +11372,7 @@
 
           <div class="acc-card">
             <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="2" y1="12" x2="22" y2="12" />
                 <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
@@ -11459,18 +11380,76 @@
               Language
             </div>
             <div class="acc-lang-grid">
-              <button class="acc-lang-btn active" onclick="accSetLang(this)">🇬🇧 English</button>
-              <button class="acc-lang-btn" onclick="accSetLang(this)">🇫🇷 French</button>
-              <button class="acc-lang-btn" onclick="accSetLang(this)">🇪🇸 Spanish</button>
-              <button class="acc-lang-btn" onclick="accSetLang(this)">🇳🇱 Dutch</button>
-              <button class="acc-lang-btn" onclick="accSetLang(this)">🇵🇹 Portuguese</button>
-              <button class="acc-lang-btn" onclick="accSetLang(this)">🇷🇺 Russian</button>
+              <button class="acc-lang-btn active" onclick="accSetLang(this)"><svg width="14px" height="14px"
+                  viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                  <path fill="#00247D"
+                    d="M0 9.059V13h5.628zM4.664 31H13v-5.837zM23 25.164V31h8.335zM0 23v3.941L5.63 23zM31.337 5H23v5.837zM36 26.942V23h-5.631zM36 13V9.059L30.371 13zM13 5H4.664L13 10.837z">
+                  </path>
+                  <path fill="#CF1B2B"
+                    d="M25.14 23l9.712 6.801a3.977 3.977 0 0 0 .99-1.749L28.627 23H25.14zM13 23h-2.141l-9.711 6.8c.521.53 1.189.909 1.938 1.085L13 23.943V23zm10-10h2.141l9.711-6.8a3.988 3.988 0 0 0-1.937-1.085L23 12.057V13zm-12.141 0L1.148 6.2a3.994 3.994 0 0 0-.991 1.749L7.372 13h3.487z">
+                  </path>
+                  <path fill="#EEE"
+                    d="M36 21H21v10h2v-5.836L31.335 31H32a3.99 3.99 0 0 0 2.852-1.199L25.14 23h3.487l7.215 5.052c.093-.337.158-.686.158-1.052v-.058L30.369 23H36v-2zM0 21v2h5.63L0 26.941V27c0 1.091.439 2.078 1.148 2.8l9.711-6.8H13v.943l-9.914 6.941c.294.07.598.116.914.116h.664L13 25.163V31h2V21H0zM36 9a3.983 3.983 0 0 0-1.148-2.8L25.141 13H23v-.943l9.915-6.942A4.001 4.001 0 0 0 32 5h-.663L23 10.837V5h-2v10h15v-2h-5.629L36 9.059V9zM13 5v5.837L4.664 5H4a3.985 3.985 0 0 0-2.852 1.2l9.711 6.8H7.372L.157 7.949A3.968 3.968 0 0 0 0 9v.059L5.628 13H0v2h15V5h-2z">
+                  </path>
+                  <path fill="#CF1B2B" d="M21 15V5h-6v10H0v6h15v10h6V21h15v-6z"></path>
+                </svg> English</button>
+              <button class="acc-lang-btn" onclick="accSetLang(this)"><svg width="14px" height="14px"
+                  viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                  <path fill="#ED2939" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"></path>
+                  <path fill="#002495" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"></path>
+                  <path fill="#EEE" d="M12 5h12v26H12z"></path>
+                </svg> French</button>
+              <button class="acc-lang-btn" onclick="accSetLang(this)"><svg width="14px" height="14px"
+                  viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                  <path fill="#C60A1D" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z">
+                  </path>
+                  <path fill="#FFC400" d="M0 12h36v12H0z"></path>
+                  <path fill="#EA596E" d="M9 17v3a3 3 0 1 0 6 0v-3H9z"></path>
+                  <path fill="#F4A2B2" d="M12 16h3v3h-3z"></path>
+                  <path fill="#DD2E44" d="M9 16h3v3H9z"></path>
+                  <ellipse fill="#EA596E" cx="12" cy="14.5" rx="3" ry="1.5"></ellipse>
+                  <ellipse fill="#FFAC33" cx="12" cy="13.75" rx="3" ry=".75"></ellipse>
+                  <path fill="#99AAB5" d="M7 16h1v7H7zm9 0h1v7h-1z"></path>
+                  <path fill="#66757F" d="M6 22h3v1H6zm9 0h3v1h-3zm-8-7h1v1H7zm9 0h1v1h-1z"></path>
+                </svg> Spanish</button>
+              <button class="acc-lang-btn" onclick="accSetLang(this)"><svg width="14px" height="14px"
+                  viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                  <path fill="#EEE" d="M0 14h36v8H0z"></path>
+                  <path fill="#AE1F28" d="M32 5H4a4 4 0 0 0-4 4v5h36V9a4 4 0 0 0-4-4z"></path>
+                  <path fill="#20478B" d="M4 31h28a4 4 0 0 0 4-4v-5H0v5a4 4 0 0 0 4 4z"></path>
+                </svg> Dutch</button>
+              <button class="acc-lang-btn" onclick="accSetLang(this)"><svg width="14px" height="14px"
+                  viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                  <path fill="#060" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v18z">
+                  </path>
+                  <path fill="#D52B1E" d="M32 5H15v26h17a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"></path>
+                  <path fill="#FFCC4D"
+                    d="M15 10a8 8 0 0 0-8 8a8 8 0 1 0 16 0a8 8 0 0 0-8-8zm-6.113 4.594l1.602 1.602l-2.46 1.23a6.95 6.95 0 0 1 .858-2.832zm-.858 3.979l4.4 2.207l-2.706 1.804l.014.021a6.963 6.963 0 0 1-1.708-4.032zM14 24.92a6.945 6.945 0 0 1-2.592-.92H14v.92zM14 23h-3.099L14 20.934V23zm0-3.268l-.607.405L9.118 18l2.116-1.058L14 19.707v.025zm0-1.439l-3.543-3.543l3.543.59v2.953zm0-3.992l-4.432-.713A6.983 6.983 0 0 1 14 11.08v3.221zm7.113.293a6.95 6.95 0 0 1 .858 2.833l-2.46-1.23l1.602-1.603zM16 11.08a6.987 6.987 0 0 1 4.432 2.508L16 14.301V11.08zm0 4.26l3.543-.591L16 18.293V15.34zm0 4.367l2.765-2.765L20.882 18l-4.274 2.137l-.608-.405v-.025zm0 5.213V24h2.592a6.945 6.945 0 0 1-2.592.92zM16 23v-2.066L19.099 23H16zm4.264-.395l.014-.021l-2.706-1.804l4.4-2.207a6.976 6.976 0 0 1-1.708 4.032z">
+                  </path>
+                  <path fill="#D52B1E" d="M11 13v7a4 4 0 0 0 8 0v-7h-8z"></path>
+                  <path fill="#FFF" d="M12 14v6a3 3 0 0 0 6 0v-6h-6z"></path>
+                  <path fill="#829ACD" d="M13 17h4v2h-4z"></path>
+                  <path fill="#829ACD" d="M14 16h2v4h-2z"></path>
+                  <path fill="#039" d="M12 17h1v2h-1zm2 0h2v2h-2zm3 0h1v2h-1zm-3 3h2v2h-2zm0-6h2v2h-2z"></path>
+                </svg> Portuguese</button>
+              <button class="acc-lang-btn" onclick="accSetLang(this)"><svg width="14px" height="14px"
+                  viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
+                  <path fill="#CE2028" d="M36 27a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4v-4h36v4z"></path>
+                  <path fill="#22408C" d="M0 13h36v10H0z"></path>
+                  <path fill="#EEE" d="M32 5H4a4 4 0 0 0-4 4v4h36V9a4 4 0 0 0-4-4z"></path>
+                </svg> Russian</button>
             </div>
           </div>
 
           <div class="acc-card">
             <div class="acc-card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
                 <circle cx="12" cy="12" r="3" />
                 <path
                   d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
