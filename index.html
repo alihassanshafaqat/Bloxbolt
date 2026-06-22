@@ -10721,8 +10721,8 @@
       function grantVip(username, plan) {
         const users = getUsers();
         if (!users[username]) return;
-        users[username].isVip = true;
-        users[username].vipPlan = plan;
+        if (plan === 'monthly') plan = 'basic';
+        if (plan === 'yearly') plan = 'basic';
         const now = new Date();
         const exp = new Date(now);
         if (plan === 'yearly') exp.setFullYear(exp.getFullYear() + 1);
@@ -11303,7 +11303,8 @@
               <div style="font-size:13px;color:var(--text2);margin-bottom:8px;">✓ +25% points on every task</div>
               <div style="font-size:13px;color:var(--text2);margin-bottom:8px;">✓ Priority task access</div>
               <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">✓ 1 bonus spin per day</div>
-              <button class="acc-btn acc-btn-ghost" style="width:100%;padding:10px;">Choose Basic</button>
+              <button class="acc-btn acc-btn-ghost" style="width:100%;padding:10px;"
+                onclick="grantVip(getCurrentUser()?.username,'basic')">Choose Basic</button>
             </div>
 
             <!-- VIP Pro -->
@@ -11318,7 +11319,8 @@
               <div style="font-size:13px;color:#a78bfa;margin-bottom:8px;">✓ Priority task access</div>
               <div style="font-size:13px;color:#a78bfa;margin-bottom:8px;">✓ 3 bonus spins per day</div>
               <div style="font-size:13px;color:#a78bfa;margin-bottom:14px;">✓ Exclusive events access</div>
-              <button class="acc-btn acc-btn-purple" style="width:100%;padding:10px;">Choose Pro</button>
+              <button class="acc-btn acc-btn-green" style="width:100%;padding:10px;"
+                onclick="grantVip(getCurrentUser()?.username,'pro')">Choose Pro</button>
             </div>
           </div>
         </div>
@@ -11510,11 +11512,14 @@
 
             // Tier labels
             const tierLeft = document.getElementById('acc-home-tier-left');
-            if (tierLeft) tierLeft.textContent = `${current.tier} ${current.level}`;
-            const lvlCenter = document.getElementById('acc-home-lvl-center');
-            if (lvlCenter) lvlCenter.textContent = `Level ${current.level}`;
+            if (tierLeft) tierLeft.innerHTML = `<img src="${getLevelBadge(current.level)}" 
+  style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:4px;">
+  ${current.tier} ${current.level}`;
+
             const tierRight = document.getElementById('acc-home-tier-right');
-            if (tierRight && nextLevel) tierRight.textContent = `${nextLevel.tier} ${nextLevel.level}`;
+            if (tierRight && nextLevel) tierRight.innerHTML = `<img src="${getLevelBadge(nextLevel.level)}" 
+  style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:4px;">
+  ${nextLevel.tier} ${nextLevel.level}`;
 
             // Rank
             const allUsers = Object.values(getUsers()).sort((a, b) => (b.points || 0) - (a.points || 0));
@@ -14937,6 +14942,7 @@
     }
 
     function doRedeem() {
+
       const field = document.getElementById('ct-code-field');
       if (!field) return;
       const code = field.value.trim().toUpperCase();
@@ -14958,6 +14964,9 @@
       applyUserToUI(users[user.username]);
       field.value = '';
       showToast(`+${codeData.pts} points earned!`, 'ok');
+      setTimeout(() => {
+        addXpToUser(user.username, 5, 'creator');
+      }, 1500);
     }
     setInterval(() => {
       const user = getCurrentUser();
@@ -15105,12 +15114,16 @@
         users[user.username].points += pts;
         users[user.username].totalPoints = (users[user.username].totalPoints || 0) + pts;
         users[user.username].lastSpin = Date.now();
-        saveUsers(users);
-        applyUserToUI(users[user.username]);
+        saveUsers(users);                          // points save
+        applyUserToUI(users[user.username]);       // UI update
+
+        // result show
         const resEl = document.getElementById('sp-result');
         document.getElementById('sp-result-pts').textContent = '+' + pts;
         document.getElementById('sp-result-msg').textContent = SP_MSGS[pts] || 'Nice!';
         resEl.style.display = 'block';
+
+        // history update
         const histList = document.getElementById('sp-hist-list');
         if (histList) {
           const seed = encodeURIComponent(user.username);
@@ -15121,6 +15134,10 @@
           if (histList.children.length > 5) histList.removeChild(histList.lastChild);
         }
         spUpdateUI();
+        setTimeout(() => {
+          addXpToUser(user.username, 1, 'spin');
+        }, 1500);
+
       }, 3100);
     }
 
@@ -15129,10 +15146,10 @@
     // ════════════════════════════════════════
     const XP_LEVELS = [
       { level: 1, xpReq: 0, tier: 'Bronze', pts: 0 },
-      { level: 2, xpReq: 100, tier: 'Bronze', pts: 50 },
-      { level: 3, xpReq: 250, tier: 'Bronze', pts: 75 },
-      { level: 4, xpReq: 500, tier: 'Silver', pts: 100 },
-      { level: 5, xpReq: 800, tier: 'Silver', pts: 150 },
+      { level: 2, xpReq: 300, tier: 'Bronze', pts: 50 },
+      { level: 3, xpReq: 500, tier: 'Bronze', pts: 75 },
+      { level: 4, xpReq: 700, tier: 'Silver', pts: 100 },
+      { level: 5, xpReq: 900, tier: 'Silver', pts: 150 },
       { level: 6, xpReq: 1200, tier: 'Silver', pts: 200 },
       { level: 7, xpReq: 1700, tier: 'Ruby', pts: 300 },
       { level: 8, xpReq: 2300, tier: 'Ruby', pts: 400 },
@@ -15190,17 +15207,43 @@
       const nextLevel = XP_LEVELS.find(l => l.level === current.level + 1) || null;
       return { current, nextLevel };
     }
+    function getLevelBadge(level) {
+      const badgeMap = {
+        1: 'badges/bloxbolt_lvl1_v.png',
+        2: 'badges/bloxbolt_lvl1_v1.png',
+        3: 'badges/bloxbolt_lvl1_v2.png',
+        4: 'badges/bloxbolt_lvl2_v.png',
+        5: 'badges/bloxbolt_lvl2_v1.png',
+        6: 'badges/bloxbolt_lvl2_v2.png',
+        7: 'badges/bloxbolt_lvl3_v.png',
+        8: 'badges/bloxbolt_lvl3_v1.png',
+        9: 'badges/bloxbolt_lvl3_v2.png',
+        10: 'badges/bloxbolt_lvl4_v.png',
+        11: 'badges/bloxbolt_lvl4_v1.png',
+        12: 'badges/bloxbolt_lvl4_v2.png',
+      };
+      return badgeMap[level] || badgeMap[1];
+    }
+    // update 0.2
 
-    function addXpToUser(username, xpAmount) {
+    function addXpToUser(username, baseXp, taskType) {
       const users = getUsers();
       if (!users[username]) return;
+
+      // VIP multiplier
+      let multiplier = 1;
+      if (users[username].isVip) {
+        if (users[username].vipPlan === 'pro') multiplier = 3;
+        else multiplier = 2;
+      }
+
+      const finalXp = baseXp * multiplier;
       const oldXp = users[username].xp || 0;
       const oldInfo = getLevelInfo(oldXp);
-      users[username].xp = oldXp + xpAmount;
+      users[username].xp = oldXp + finalXp;
       const newInfo = getLevelInfo(users[username].xp);
-      // Check level up
+
       if (newInfo.current.level > oldInfo.current.level) {
-        // Award points for level up
         const reward = newInfo.current.pts;
         users[username].points = (users[username].points || 0) + reward;
         users[username].totalPoints = (users[username].totalPoints || 0) + reward;
@@ -15209,6 +15252,11 @@
       } else {
         saveUsers(users);
       }
+
+      const xpMsg = multiplier > 1
+        ? `+${finalXp} XP (${baseXp} x${multiplier} VIP bonus!)`
+        : `+${finalXp} XP`;
+      showToast(xpMsg, 'ok');
       updateRewardsSection();
     }
 
@@ -15237,14 +15285,10 @@
       // Level badge image (use tier color glow SVG as fallback, show image)
       const badgeWrap = document.getElementById('rew-badge-wrap');
       if (badgeWrap) {
-        // Use tier-colored crown SVG badge
-        const badgeSvgs = {
-          Bronze: `<img src="tire/bronz.png" height="26" viewBox="0 0 56 56" fill="none" <defs><linearGradient id="bg" x1="0" y1="0" x2="56" y2="56"><stop offset="0%" stop-color="#4a2a0a"/><stop offset="100%" stop-color="#8B5E3C"/></linearGradient><linearGradient id="shine" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e9a96e"/><stop offset="100%" stop-color="#cd7f32"/></linearGradient></defs><rect width="56" height="56" rx="14" fill="url(#bg)"/><rect width="56" height="56" rx="14" fill="rgba(0,0,0,0)" stroke="#cd7f32" stroke-width="1.5" opacity="0.6"/><text x="28" y="38" text-anchor="middle" font-size="28" fill="url(#shine)" font-weight="900" font-family="system-ui"></text></svg>`,
-          Silver: `<img src="tire/silver.png" height="56" viewBox="0 0 56 56" fill="none" <defs><linearGradient id="bgs" x1="0" y1="0" x2="56" y2="56"><stop offset="0%" stop-color="#1a1f2e"/><stop offset="100%" stop-color="#3a4050"/></linearGradient></defs><rect width="56" height="56" rx="14" fill="url(#bgs)"/><rect width="56" height="56" rx="14" fill="rgba(0,0,0,0)" stroke="#94a3b8" stroke-width="1.5" opacity="0.6"/><text x="28" y="38" text-anchor="middle" font-size="28" fill="#94a3b8" font-weight="900" font-family="system-ui"></text></svg>`,
-          Ruby: `<img src="tire/ruby.png" height="56" viewBox="0 0 56 56" fill="none" <defs><linearGradient id="bgr" x1="0" y1="0" x2="56" y2="56"><stop offset="0%" stop-color="#3a0a0a"/><stop offset="100%" stop-color="#6b1a1a"/></linearGradient></defs><rect width="56" height="56" rx="14" fill="url(#bgr)"/><rect width="56" height="56" rx="14" fill="rgba(0,0,0,0)" stroke="#f87171" stroke-width="1.5" opacity="0.6"/><text x="28" y="38" text-anchor="middle" font-size="28" font-weight="900" font-family="system-ui"></text><circle cx="28" cy="24" r="7" fill="#f87171" opacity="0.15"/><polygon points="28,18 30.5,23 36,23.5 32,27 33,32.5 28,29.5 23,32.5 24,27 20,23.5 25.5,23" fill="#f87171" opacity="0.8"/></svg>`,
-          Violet: `<img src="tire/elite.png"" height="56" viewBox="0 0 56 56" fill="none" <defs><linearGradient id="bgv" x1="0" y1="0" x2="56" y2="56"><stop offset="0%" stop-color="#1a0a3a"/><stop offset="100%" stop-color="#3a1a6b"/></linearGradient></defs><rect width="56" height="56" rx="14" fill="url(#bgv)"/><rect width="56" height="56" rx="14" fill="rgba(0,0,0,0)" stroke="#a78bfa" stroke-width="1.5" opacity="0.6"/><polygon points="28,14 34,22 42,23.5 36,30 37.5,38 28,34 18.5,38 20,30 14,23.5 22,22" fill="#a78bfa" opacity="0.85"/><circle cx="28" cy="28" r="4" fill="#c4b5fd"/></svg>`,
-        };
-        badgeWrap.innerHTML = badgeSvgs[current.tier] || badgeSvgs.Bronze;
+        const badgeSrc = getLevelBadge(current.level);
+        badgeWrap.innerHTML = `<img src="${badgeSrc}" 
+    style="width:64px;height:64px;object-fit:contain;" 
+    alt="Level ${current.level} Badge">`;
         badgeWrap.style.filter = TIER_BADGE_STYLE[current.tier];
       }
 
@@ -15540,14 +15584,27 @@
       <img class="top3-av" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" alt="">
       </div>
       <div class="top3-name">${u.username}${u.isYou ? ` <span style="font-size:10px;color:var(--purpleL);">(You)</span>` : ''}</div>
-      <div class="top3-tier" style="color:${cfg.color}">Level ${u.level} — ${u.tier}</div>
+      <div class="top3-tier" style="color:${cfg.color};display:flex;align-items:center;gap:6px;justify-content:center;">
+        <img src="${getLevelBadge(u.level)}" style="width:18px;height:18px;object-fit:contain;">
+        Level ${u.level} — ${u.tier}
+        </div>
       <div style="width:85%;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;margin-bottom:12px;box-sizing:border-box;text-align:left;">
       <div style="color:var(--text3);font-size:11px;margin-bottom:3px;">Total Wagered:</div>
       <div style="color:var(--text);font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;"><img src="coin/blox_coin_2.png" alt="" style="width:16px;height:16px;object-fit:contain;">${uPts.toLocaleString()}</div>
       </div>
       <div class="top3-reward">
-  <img src="coin/blox_coin_2.png" style="width:16px;height:16px;object-fit:contain;">
-  0
+        <svg viewBox="0 -0.23095815491140392 24.000874817762764 26.591916309822807"
+        xmlns="http://www.w3.org/2000/svg" width="16px" height="16px">
+        <linearGradient id="dt" gradientTransform="matrix(24 0 0 -26.1 531 1665.03)"
+        gradientUnits="userSpaceOnUse" x1="-21.63" x2="-21.63" y1="63.75" y2="62.78">
+        <stop offset="0" stop-color="#a855f7" />
+        <stop offset=".59" stop-color="#a855f7" />
+        <stop offset="1" stop-color="#a855f7" />
+        </linearGradient>
+        <path
+        d="M21.4 4.62a5.2 5.2 0 0 1 2.6 4.5V17a5.19 5.19 0 0 1-2.6 4.5l-6.8 3.93a5.19 5.19 0 0 1-5.2 0l-6.8-3.95A5.19 5.19 0 0 1 0 17V9.12a5.2 5.2 0 0 1 2.6-4.5L9.4.7a5.19 5.19 0 0 1 5.2 0zM10.31 2.48L3.69 6.31A3.35 3.35 0 0 0 2 9.23v7.65a3.36 3.36 0 0 0 1.69 2.92l6.62 3.83a3.4 3.4 0 0 0 3.38 0l6.62-3.83A3.36 3.36 0 0 0 22 16.88V9.23a3.35 3.35 0 0 0-1.69-2.92l-6.62-3.83a3.4 3.4 0 0 0-3.38 0zm3.08 2.14l5.22 3A2.78 2.78 0 0 1 20 10v6a2.76 2.76 0 0 1-1.39 2.4l-5.22 3a2.76 2.76 0 0 1-2.78 0l-5.22-3A2.76 2.76 0 0 1 4 16.07V10a2.78 2.78 0 0 1 1.39-2.37l5.22-3a2.76 2.76 0 0 1 2.78 0zM9 16.05h6v-6H9z"
+        fill="url(#dt)" />
+        </svg> 0
 </div>
     </div>`;
       }).join('');
@@ -15618,8 +15675,19 @@
   <img src="coin/blox_coin_2.png" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;">${uPts.toLocaleString()}
 </td>
       <td style="text-align:right;font-size:13px;font-weight:700;">
-  <span style="background:rgba(30,30,50,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px 10px;color:#fff;display:inline-flex;align-items:center;gap:4px;">
-    <img src="coin/blox_coin_2.png" style="width:14px;height:14px;">0
+          <span style="background:rgba(30,30,50,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px 10px;color:#fff;display:inline-flex;align-items:center;gap:4px;">
+          <svg viewBox="0 -0.23095815491140392 24.000874817762764 26.591916309822807"
+          xmlns="http://www.w3.org/2000/svg" width="14px" height="14px">
+          <linearGradient id="dt" gradientTransform="matrix(24 0 0 -26.1 531 1665.03)"
+            gradientUnits="userSpaceOnUse" x1="-21.63" x2="-21.63" y1="63.75" y2="62.78">
+            <stop offset="0" stop-color="#a855f7" />
+            <stop offset=".59" stop-color="#a855f7" />
+            <stop offset="1" stop-color="#a855f7" />
+          </linearGradient>
+          <path
+            d="M21.4 4.62a5.2 5.2 0 0 1 2.6 4.5V17a5.19 5.19 0 0 1-2.6 4.5l-6.8 3.93a5.19 5.19 0 0 1-5.2 0l-6.8-3.95A5.19 5.19 0 0 1 0 17V9.12a5.2 5.2 0 0 1 2.6-4.5L9.4.7a5.19 5.19 0 0 1 5.2 0zM10.31 2.48L3.69 6.31A3.35 3.35 0 0 0 2 9.23v7.65a3.36 3.36 0 0 0 1.69 2.92l6.62 3.83a3.4 3.4 0 0 0 3.38 0l6.62-3.83A3.36 3.36 0 0 0 22 16.88V9.23a3.35 3.35 0 0 0-1.69-2.92l-6.62-3.83a3.4 3.4 0 0 0-3.38 0zm3.08 2.14l5.22 3A2.78 2.78 0 0 1 20 10v6a2.76 2.76 0 0 1-1.39 2.4l-5.22 3a2.76 2.76 0 0 1-2.78 0l-5.22-3A2.76 2.76 0 0 1 4 16.07V10a2.78 2.78 0 0 1 1.39-2.37l5.22-3a2.76 2.76 0 0 1 2.78 0zM9 16.05h6v-6H9z"
+            fill="url(#dt)" />
+          </svg>0
   </span>
 </td>
     </tr>`;
@@ -15841,7 +15909,10 @@
         <img class="adm2-uav" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" alt="">
         <div><div class="adm2-un">${u.username}${u.flagged ? '<span class="adm2-flag-icon" style="margin-left:6px;">FLAGGED</span>' : ''}</div><div class="adm2-ue">${u.email || '—'}</div></div>
       </div></td>
-      <td><span style="font-size:12px;font-weight:700;color:${tc};">Lv ${current.level} — ${tier}</span></td>
+      <span style="font-size:12px;font-weight:700;color:${tc};display:flex;align-items:center;gap:5px;">
+  <img src="${getLevelBadge(u.level)}" style="width:14px;height:14px;object-fit:contain;">
+  Lv ${u.level} — ${u.tier}
+</span>
       <td style="color:var(--yellow);font-weight:700;">${(u.points || 0).toLocaleString()}</td>
       <td style="color:var(--green);">${u.tasksCompleted || 0}</td>
       <td style="color:var(--text2);">${u.orders || 0}</td>
