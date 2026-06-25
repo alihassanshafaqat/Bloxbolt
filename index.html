@@ -191,18 +191,17 @@
     }
 
     /* ─── WELCOME POPUP ─── */
+    /* ─── WELCOME OVERLAY — ROSTAKE STYLE ─── */
     #welcome-overlay {
       position: fixed;
       inset: 0;
-      z-index: 8000;
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(6px);
+      z-index: 9000;
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s;
+      transition: opacity 0.4s;
     }
 
     #welcome-overlay.open {
@@ -210,92 +209,125 @@
       pointer-events: all;
     }
 
-    .welcome-modal {
-      background: var(--card);
-      border: 1px solid var(--border2);
-      border-radius: 20px;
-      padding: 36px 32px;
-      width: 100%;
-      max-width: 460px;
-      text-align: center;
-      animation: fadeIn 0.35s ease;
+    .welcome-blur-bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 8, 20, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
 
+    .welcome-modal {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+      padding: 0 20px;
+      animation: welcomeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes welcomeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .welcome-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124, 58, 237, 0.18);
+      border: 1px solid rgba(124, 58, 237, 0.45);
+      border-radius: 999px;
+      padding: 5px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purpleL);
+      margin-bottom: 22px;
+    }
+
+
     .welcome-logo-row {
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 18px;
     }
 
     .welcome-logo-row img {
+      height: 64px;
       width: auto;
-      height: 44px;
+      filter: drop-shadow(0 0 24px rgba(124, 58, 237, 0.5));
     }
 
-    .welcome-modal h2 {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1.35;
-      margin-bottom: 20px;
-    }
-
-    .welcome-block {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      font-size: 13px;
+    .welcome-desc {
+      font-size: 14px;
       color: var(--text2);
-      line-height: 1.65;
+      line-height: 1.75;
+      margin-bottom: 6px;
+      max-width: 380px;
     }
 
-    .welcome-block strong {
-      color: var(--text);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .welcome-update {
-      background: rgba(124, 58, 237, 0.07);
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 22px;
-      font-size: 13px;
-      color: var(--text2);
-      line-height: 1.65;
-    }
-
-    .welcome-update strong {
-      color: var(--purpleL);
-      display: block;
-      margin-bottom: 4px;
+    .welcome-legal {
+      font-size: 11.5px;
+      color: var(--text3);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 360px;
     }
 
     .btn-understood {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: var(--purple);
       color: #fff;
       font-weight: 700;
       font-size: 15px;
-      padding: 13px 32px;
-      border-radius: 12px;
+      padding: 14px 36px;
+      border-radius: 9px;
       border: none;
       cursor: pointer;
-      transition: all 0.25s;
       font-family: var(--font);
+      transition: all 0.25s;
+      letter-spacing: 0.02em;
+
+      box-shadow: 0 3px 0 #3d1a8a,
+        /* bottom 3D depth */
+        inset 0 3px 0 rgba(255, 255, 255, 0.35),
+        /* top white highlight */
+        inset 0 -3px 0 rgba(0, 0, 0, 0.02),
+        /* bottom inner shadow - depth banaye rakhe */
+        inset -1px 0 0 rgba(255, 255, 255, 0.01);
     }
 
     .btn-understood:hover {
       background: var(--purple2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(124, 58, 237, 0.55);
+      box-shadow: 0 3px 0 #3d1a8a,
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-understood svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+    .btn-understood:hover svg {
+      transform: translateX(3px);
     }
 
     /* ─── AUTH MODAL ─── */
@@ -337,10 +369,20 @@
     }
 
     .auth-logo-row img {
-      width: auto;
+      width: 36px;
       height: 36px;
     }
 
+    .auth-logo-row span {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .auth-logo-row span em {
+      color: var(--purpleL);
+      font-style: normal;
+    }
 
     .auth-tabs {
       display: flex;
@@ -5146,26 +5188,36 @@
 
   <!-- ─── WELCOME POPUP ─── -->
   <div id="welcome-overlay">
+    <div class="welcome-blur-bg"></div>
+
     <div class="welcome-modal">
+
+      <div class="welcome-eyebrow">
+        WELCOME TO
+      </div>
+
       <div class="welcome-logo-row">
         <img src="logo/bloxbolt_logo_new_2.png" alt="Bloxbolt" onerror="this.style.display='none'">
+      </div>
 
-      </div>
-      <h2>Welcome to Bloxbolt</h2>
-      <div class="welcome-block">
-        <strong>Welcome in! Have fun! Play responsibly!</strong>
-        Earn rewards by completing tasks, joining events, and staying active on the platform.
-      </div>
-      <div style="font-size:13px;color:var(--text3);margin-bottom:14px;line-height:1.65;">
-        bloxbolt.com is not affiliated, associated, authorized, endorsed by, or in any way officially connected with
-        Roblox.
-      </div>
-      <div class="welcome-update">
-        <strong>Site Update</strong>
-        The site has now been acquired by new owners. We introduced a bunch of new features. All gameplay will operate
-        as before. Have fun!
-      </div>
-      <button class="btn-understood" onclick="showAuth()">Understood!</button>
+      <p class="welcome-desc">
+        Welcome to the #1 Roblox Rewards &amp; Earning Platform!
+      </p>
+
+      <p class="welcome-legal">
+        bloxbolt.com is not affiliated, associated, authorized, endorsed by,
+        or in any way officially connected with Roblox Corporation.
+      </p>
+
+      <button class="btn-understood" onclick="showAuth()">
+        Continue to Bloxbolt
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </button>
+
     </div>
   </div>
 
@@ -5173,8 +5225,9 @@
   <div id="auth-overlay">
     <div class="auth-modal">
       <div class="auth-logo-row">
-        <img src="logo/bloxbolt_logo_new_2.png" alt="Bloxbolt" onerror="this.style.display='none'">
-
+        <img src="logo/bloxbolt_logo_new_3.png" alt="Bloxbolt" style="width:36px;height:36px;"
+          onerror="this.style.display='none'">
+        <span>Blox<em style="color:var(--purpleL);font-style:normal;">bolt</em></span>
       </div>
       <div class="auth-tabs">
         <button class="atab active" id="tab-login" onclick="switchAuthTab('login')">Login</button>
@@ -5239,7 +5292,6 @@
       </div>
     </div>
   </div>
-
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-logo">
@@ -12480,6 +12532,14 @@
       document.getElementById('panel-login').classList.toggle('active', tab === 'login');
       document.getElementById('panel-register').classList.toggle('active', tab === 'register');
     }
+    // Password show/hide toggle
+    function rsTogglePass(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      if (!inp) return;
+      const isPass = inp.type === 'password';
+      inp.type = isPass ? 'text' : 'password';
+      btn.textContent = isPass ? 'Hide' : 'Show';
+    }
 
     function doLogin() {
       const userVal = document.getElementById('l-user').value.trim();
@@ -12560,16 +12620,19 @@
 
     function doRegister() {
       const userVal = document.getElementById('r-user').value.trim();
-      const ageVal = document.getElementById('r-age').value.trim();
       const emailVal = document.getElementById('r-email').value.trim();
       const passVal = document.getElementById('r-pass').value.trim();
       const pass2Val = document.getElementById('r-pass2').value.trim();
       const refVal = document.getElementById('r-ref').value.trim();
       const err = document.getElementById('r-err'); const suc = document.getElementById('r-success');
       err.style.display = 'none'; suc.style.display = 'none';
-      if (!userVal || !ageVal || !emailVal || !passVal || !pass2Val) { err.textContent = 'Please fill in all required fields.'; err.style.display = 'block'; return; }
-      if (parseInt(ageVal) < 18) { err.textContent = 'You must be 18+ to register.'; err.style.display = 'block'; return; }
-      if (passVal !== pass2Val) { err.textContent = 'Passwords do not match.'; err.style.display = 'block'; return; }
+      const tosChecked = document.getElementById('r-tos').checked;
+      if (!tosChecked) {
+        err.textContent = 'Please agree to the Terms of Service and Privacy Policy.';
+        err.style.display = 'block';
+        return;
+      }
+      if (!userVal || !emailVal || !passVal) { err.textContent = 'Please fill in all required fields.'; err.style.display = 'block'; return; }
       if (passVal.length < 8) { err.textContent = 'Password must be at least 8 characters.'; err.style.display = 'block'; return; }
       const users = getUsers();
       for (const key in users) {
@@ -12577,7 +12640,7 @@
         if (users[key].email.toLowerCase() === emailVal.toLowerCase()) { err.textContent = 'Email already registered.'; err.style.display = 'block'; return; }
       }
       const newUser = {
-        username: userVal, email: emailVal, password: hashPassword(passVal), age: parseInt(ageVal),
+        username: userVal, email: emailVal, password: hashPassword(passVal),
         points: 0, totalPoints: 0, orders: 0, referrals: 0, streak: 0, tier: 'Bronze',
         joinDate: new Date().toISOString().split('T')[0],
         refCode: userVal.toLowerCase().replace(/\s+/g, ''), referredBy: refVal || null,
