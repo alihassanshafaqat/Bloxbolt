@@ -29,6 +29,7 @@
       --border: #252545;
       --border2: #353560;
       --purple: #7c3aed;
+      --purpledim: #6d28d9;
       --purple2: #9333ea;
       --purpleL: #a855f7;
       --yellow: #f59e0b;
@@ -4457,229 +4458,545 @@
     }
 
     /* ─── SPIN PAGE REDESIGN ─── */
-    .spin-hero {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(245, 158, 11, 0.06));
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      border-radius: 24px;
-      padding: 36px 40px;
-      margin-bottom: 28px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .spin-hero::before {
-      content: '';
-      position: absolute;
-      top: -80px;
-      right: -80px;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 60%);
-      pointer-events: none;
-    }
-
-    .spin-stats {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .sp-hstat {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sp-hstat-val {
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--text);
-    }
-
-    .sp-hstat-lab {
-      font-size: 11px;
-      color: var(--text3);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .spin-main-grid {
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 24px;
-      align-items: start;
-      width: 100%;
-    }
-
-    .spin-wheel-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px;
+    .inner {
+      max-width: 860px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 36px;
     }
 
-    .spin-wheel-wrap {
+    /* ── HEADER ─────────────────────────────────────────────────── */
+    .header {
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124, 58, 237, .07);
+      border: 1px solid rgba(124, 58, 237, .2);
+      border-radius: 999px;
+      padding: 4px 13px;
+      margin-bottom: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #a855f7;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    /* ── WHEEL AREA ─────────────────────────────────────────────── */
+    .wheel-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .wheel-wrap {
       position: relative;
       width: 300px;
       height: 300px;
+      flex-shrink: 0;
     }
 
-    .spin-wheel-glow {
+    .pointer {
       position: absolute;
-      inset: -20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.2), transparent 60%);
-      pointer-events: none;
-      animation: pring 3s ease-in-out infinite;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 16px solid var(--text);
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .6));
+      z-index: 10;
     }
 
-    .spin-right {
+    #wheel {
+      border-radius: 50%;
+      display: block;
+      box-shadow: 0 0 0 3px var(--border), 0 8px 48px rgba(0, 0, 0, .6), 0 0 60px rgba(124, 58, 237, .1);
+    }
+
+    .center-cap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 2.5px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: var(--text);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, .5);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── RESULT PILL ────────────────────────────────────────────── */
+    .result-wrap {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .result-pill {
+      display: none;
+      align-items: center;
+      gap: 9px;
+      background: rgba(124, 58, 237, .1);
+      border: 1px solid rgba(124, 58, 237, .28);
+      border-radius: 9px;
+      padding: 7px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #a855f7;
+      animation: resIn .25s ease forwards;
+    }
+
+    .result-pill.show {
+      display: inline-flex;
+    }
+
+    .result-pill span {
+      color: var(--text2);
+      font-weight: 400;
+    }
+
+    /* ── CONTROLS ───────────────────────────────────────────────── */
+    .controls {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      align-items: center;
+      gap: 12px;
     }
 
-    .spin-side-card {
+    .timer-row {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .timer-row.show {
+      display: flex;
+    }
+
+    .timer-val {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: .06em;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
+      border-radius: 7px;
+      padding: 3px 11px;
     }
 
-    .spin-side-title {
-      font-size: 11px;
+    .spin-btn {
+      width: 100%;
+      background: var(--purple);
+      border: none;
+      border-radius: 9px;
+      padding: 8px 18px;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text3);
-      margin-bottom: 14px;
+      color: #fff;
+      cursor: pointer;
+      font-family: var(--font);
       display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 1px 0 #3d1a8a,
+        /* bottom 3D depth */
+        inset 0 2px 0 rgba(255, 255, 255, 0.35),
+        /* top white highlight */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.02),
+        /* bottom inner shadow - depth banaye rakhe */
+        inset -3px 0 0 rgba(255, 255, 255, 0.01);
+    }
+
+    .spin-btn:hover:not(:disabled) {
+      background: var(--purple2);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 0 #3d1a8a,
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .spin-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .spin-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      background: var(--card);
+      color: var(--text2);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    /* ── CARD ───────────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      width: 100%;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text2);
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #a855f7;
+      background: rgba(124, 58, 237, .08);
+      border: 1px solid rgba(124, 58, 237, .2);
+      border-radius: 6px;
+      padding: 3px 9px;
+      white-space: nowrap;
+    }
+
+    /* ── STREAK ─────────────────────────────────────────────────── */
+    .days {
+      display: flex;
+      gap: 6px;
+    }
+
+    .day {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 7px;
     }
 
-    .streak-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
+    .day-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--text3);
     }
 
-    .streak-day {
-      height: 32px;
-      border-radius: 8px;
+    .day-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
-      background: var(--bg2);
+      transition: all .15s;
+    }
+
+    .day-dot.done {
+      background: rgba(124, 58, 237, .12);
+      border: 1px solid rgba(124, 58, 237, .3);
+      color: #a855f7;
+    }
+
+    .day-dot.today {
+      background: #7c3aed;
+      border: 1px solid #7c3aed;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(124, 58, 237, .45);
+    }
+
+    .day-dot.future {
+      background: var(--card2);
       border: 1px solid var(--border);
       color: var(--text3);
     }
 
-    .streak-day.done {
-      background: rgba(124, 58, 237, 0.2);
-      border-color: rgba(124, 58, 237, 0.4);
-      color: var(--purpleL);
+    .day-bonus {
+      font-size: 10px;
+      color: var(--text3);
+      font-weight: 400;
     }
 
-    .streak-day.today {
-      background: var(--purple);
-      border-color: var(--purple);
-      color: #fff;
-      box-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+    .day-bonus.today {
+      color: #f59e0b;
+      font-weight: 700;
     }
 
-    .spin-how-steps {
+    /* ── BOTTOM GRID ────────────────────────────────────────────── */
+    .grid2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .spin-how-step {
-      background: var(--bg2);
-      border-radius: 10px;
-      padding: 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .spin-how-num {
-      width: 22px;
-      height: 22px;
-      background: var(--purple);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 900;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .spin-how-text {
-      font-size: 12px;
-      color: var(--text2);
-      line-height: 1.5;
-    }
-
-    .spin-how-text strong {
-      color: var(--text);
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .sp-result-wrap {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(245, 158, 11, 0.08));
-      border: 1px solid rgba(124, 58, 237, 0.35);
-      border-radius: 16px;
-      padding: 24px 32px;
-      text-align: center;
-      animation: fadeIn 0.35s ease;
+      gap: 16px;
       width: 100%;
     }
 
-    .sp-result-val {
-      font-size: 64px;
-      font-weight: 900;
-      line-height: 1;
-      background: linear-gradient(135deg, var(--purpleL), var(--yellow));
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* ── WINS ───────────────────────────────────────────────────── */
+    .wins-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .sp-bonus-banner {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.04));
-      border: 1px solid rgba(245, 158, 11, 0.25);
-      border-radius: 14px;
-      padding: 18px 22px;
+    .win-row {
       display: flex;
       align-items: center;
-      gap: 16px;
+      justify-content: space-between;
+      padding: 9px 12px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
     }
 
-    .sp-bonus-icon {
-      width: 44px;
-      height: 44px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      border-radius: 12px;
+    .win-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .win-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7c3aed;
+      opacity: .8;
+    }
+
+    .win-pts {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .win-pts small {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text2);
+      margin-left: 4px;
+    }
+
+    .win-ago {
+      font-size: 11px;
+      color: var(--text3);
+    }
+
+    /* ── HOW IT WORKS ───────────────────────────────────────────── */
+    .how-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .how-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .how-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      background: rgba(124, 58, 237, .15);
+      border: 1px solid rgba(124, 58, 237, .3);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: #a855f7;
     }
 
-    @media(max-width:900px) {
-      .spin-main-grid {
+    .how-body {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.55;
+    }
+
+    .how-body strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1px;
+    }
+
+    /* ── ODDS GRID ──────────────────────────────────────────────── */
+    .odds-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .odds-cell {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .odds-val {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .odds-unit {
+      font-size: 10px;
+      color: var(--text3);
+    }
+
+    .odds-pct {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text2);
+      margin-top: 6px;
+    }
+
+    /* ── XP TOAST ───────────────────────────────────────────────── */
+    .xp-toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: auto;
+      max-width: 220px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1c1c38;
+      border: 1px solid rgba(124, 58, 237, .35);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #f0f0ff;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .xp-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .xp-toast-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(124, 58, 237, .2);
+      border: 1px solid rgba(124, 58, 237, .3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .xp-toast-val {
+      color: #a855f7;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .xp-toast-lab {
+      font-size: 11px;
+      color: #8888b0;
+      font-weight: 400;
+      margin-top: 1px;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────────────────────────── */
+    @keyframes resIn {
+      from {
+        opacity: 0;
+        transform: scale(.92) translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────────── */
+    @media (max-width: 620px) {
+      .grid2 {
         grid-template-columns: 1fr;
+      }
+
+      .odds-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .days {
+        gap: 4px;
+      }
+
+      .day-dot {
+        width: 32px;
+        height: 32px;
+      }
+
+      .wheel-wrap {
+        width: 270px;
+        height: 270px;
+      }
+
+      #wheel {
+        width: 270px;
+        height: 270px;
       }
     }
 
@@ -10070,213 +10387,75 @@
   </main>
   <!-- ══════════════════ DAILY SPIN ══════════════════ -->
   <div id="page-spin" class="page">
-    <div style="padding:40px 56px 72px;width:100%;box-sizing:border-box;">
+    <div class="inner">
 
-      <div class="spin-hero reveal">
-        <div style="position:relative;z-index:1;">
-          <div style="font-size:12px;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-            Home <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="9 18 15 12 9 6" />
-            </svg> Daily Spin
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
-            <div>
-              <div style="font-size:36px;font-weight:900;letter-spacing:-1.2px;margin-bottom:6px;">Daily Spin</div>
-              <div style="font-size:14px;color:var(--text2);max-width:400px;line-height:1.65;">Spin the wheel once every
-                24 hours. Earn bonus Blox Points, keep your streak alive, and unlock multipliers.</div>
-            </div>
-          </div>
+      <!-- HEADER -->
+      <div class="header">
+        <div class="eyebrow">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          Resets daily
         </div>
+        <h1>Daily Spin</h1>
+        <p class="subtitle">Spin once every 24 hours — win up to 5,000 pts.</p>
       </div>
 
-      <div class="sp-bonus-banner reveal" style="margin-bottom:24px;">
-        <div class="sp-bonus-icon"></div>
-        <div style="flex:1;">
-          <div style="font-size:14px;font-weight:800;margin-bottom:3px;">Day 7 Streak — Bonus Active!</div>
-          <div style="font-size:12px;color:var(--text2);">You're on a 7-day spin streak. Keep it going for a <strong
-              style="color:var(--yellow)">2x point multiplier</strong> at Day 14.</div>
+      <!-- WHEEL AREA -->
+      <div class="wheel-area">
+        <div class="wheel-wrap">
+          <div class="pointer"></div>
+          <canvas id="wheel" width="300" height="300"></canvas>
+          <div class="center-cap">SPIN</div>
         </div>
-        <div
-          style="text-align:center;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:12px;padding:10px 18px;">
-          <div style="font-size:22px;font-weight:900;color:var(--yellow);">7</div>
-          <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;">Day Streak</div>
-        </div>
-      </div>
 
-      <div class="spin-main-grid">
-
-        <div class="spin-wheel-card reveal">
-          <div style="font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--purpleL)" stroke-width="2">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 2a10 10 0 0 1 10 10" />
-              <polyline points="16 12 12 8 8 12" />
-            </svg>
-            Spin the Wheel
-          </div>
-
-          <div class="spin-wheel-wrap">
-            <div class="spin-wheel-glow"></div>
-            <div style="width:300px;height:300px;position:relative;">
-              <img id="sp-wheel-img" src="spin.png" alt="Spin Wheel"
-                style="width:300px;height:300px;border-radius:50%;display:block;transition:transform 2.5s cubic-bezier(0.17,0.67,0.12,0.99);transform-origin:center center;">
-              <img id="sp-pointer" src="wheel_spin_1.png" alt="Pointer"
-                style="position:absolute;top:+60px;left:50%;transform:translateX(-50%);transform-origin:center bottom;width:90px;height:auto;z-index:10;pointer-events:none;">
-              <img src="wheel_spin_2.png" alt="Spin Button"
-                style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:50%;z-index:6;pointer-events:none;">
-              <div id="sp-center-btn" onclick="spinWheel()"
-                style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:50%;cursor:pointer;z-index:5;background:transparent;">
-              </div>
-            </div>
-          </div>
-
-          <div id="sp-ready-pill"
-            style="display:flex;align-items:center;gap:8px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;color:var(--green);">
+        <!-- Result -->
+        <div class="result-wrap">
+          <div class="result-pill" id="resultPill">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="20 6 9 17 4 12" />
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
-            Spin available — good luck!
+            You won <strong id="resultLabel"></strong>&nbsp;<span>points</span>
           </div>
-          <div id="sp-cooldown-pill"
-            style="display:none;align-items:center;gap:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;color:#fca5a5;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <div class="timer-row" id="timerRow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
               <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
+              <path d="M12 6v6l4 2" />
             </svg>
-            Next spin in: <span id="sp-timer"
-              style="font-family:monospace;font-size:15px;color:#f87171;margin-left:4px;">23:59:59</span>
+            Next spin in
+            <span class="timer-val" id="timerVal">23:59:59</span>
           </div>
-          <div id="sp-login-pill"
-            style="display:none;align-items:center;gap:8px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;color:var(--purpleL);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            Log in to spin
-          </div>
-
-          <div id="sp-result" style="display:none;width:100%;">
-            <div class="sp-result-wrap">
-              <div
-                style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;">
-                You Won</div>
-              <div class="sp-result-val" id="sp-result-pts">+3</div>
-              <div
-                style="font-size:12px;color:var(--purpleL);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:4px;">
-                POINTS</div>
-              <div id="sp-result-msg" style="font-size:14px;color:var(--text2);margin-top:10px;"></div>
-            </div>
-          </div>
-
-          <button id="sp-main-btn" onclick="spinWheel()"
-            style="background:var(--purple);color:#fff;border:none;border-radius:12px;padding:14px 48px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.25s;font-family:var(--font);box-shadow:0 8px 28px rgba(124,58,237,0.4);"><b>SPIN
-              NOW</b></button>
-
-          <div style="width:100%;border-top:1px solid var(--border);padding-top:18px;">
-            <div
-              style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">
-              How It Works</div>
-            <div class="spin-how-steps">
-              <div class="spin-how-step">
-                <div class="spin-how-num">1</div>
-                <div class="spin-how-text"><strong>Log In Daily</strong>Come back every day to spin.</div>
-              </div>
-              <div class="spin-how-step">
-                <div class="spin-how-num">2</div>
-                <div class="spin-how-text"><strong>Spin the Wheel</strong>One free spin per 24 hours.</div>
-              </div>
-              <div class="spin-how-step">
-                <div class="spin-how-num">3</div>
-                <div class="spin-how-text"><strong>Earn Points</strong>Points added instantly to your balance.</div>
-              </div>
-              <div class="spin-how-step">
-                <div class="spin-how-num">4</div>
-                <div class="spin-how-text"><strong>Keep Streak</strong>Streaks unlock point multipliers.</div>
-              </div>
-            </div>
-          </div>
+          <button class="spin-btn" id="spinBtn">Spin Now</button>
         </div>
+      </div>
 
-        <div class="spin-right">
+      <!-- STREAK -->
+      <div class="card" id="streakCard"></div>
 
-          <div class="spin-side-card reveal">
-            <div class="spin-side-title">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              Weekly Streak
-            </div>
-            <div class="streak-grid">
-              <div class="streak-day done">M</div>
-              <div class="streak-day done">T</div>
-              <div class="streak-day done">W</div>
-              <div class="streak-day done">T</div>
-              <div class="streak-day done">F</div>
-              <div class="streak-day done">S</div>
-              <div class="streak-day today">S</div>
-            </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--text2);line-height:1.6;">
-              Complete the week for a <strong style="color:var(--yellow)">+50 pt bonus</strong> on your next spin!
-            </div>
-          </div>
-          <div class="spin-side-card reveal">
-            <div class="spin-side-title">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--purpleL)" stroke-width="2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-              </svg>
-              Recent Spins
-            </div>
-            <div id="sp-hist-list" style="display:flex;flex-direction:column;gap:0;">
-              <div
-                style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(37,37,69,0.4);font-size:13px;">
-                <div style="display:flex;align-items:center;gap:8px;color:var(--text2);"><img
-                    src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=xNovaByte"
-                    style="width:24px;height:24px;border-radius:7px;border:1px solid var(--border)">xNovaByte</div><span
-                  style="color:var(--yellow);font-weight:700;background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:5px;">+3</span>
-              </div>
-              <div
-                style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(37,37,69,0.4);font-size:13px;">
-                <div style="display:flex;align-items:center;gap:8px;color:var(--text2);"><img
-                    src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=CryptoFox"
-                    style="width:24px;height:24px;border-radius:7px;border:1px solid var(--border)">CryptoFox</div><span
-                  style="color:var(--yellow);font-weight:700;background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:5px;">+2</span>
-              </div>
-              <div
-                style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(37,37,69,0.4);font-size:13px;">
-                <div style="display:flex;align-items:center;gap:8px;color:var(--text2);"><img
-                    src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=StarGrind"
-                    style="width:24px;height:24px;border-radius:7px;border:1px solid var(--border)">StarGrind</div><span
-                  style="color:var(--green);font-weight:700;background:rgba(16,185,129,0.1);padding:2px 8px;border-radius:5px;">+10</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;font-size:13px;">
-                <div style="display:flex;align-items:center;gap:8px;color:var(--text2);"><img
-                    src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=MegaLoot"
-                    style="width:24px;height:24px;border-radius:7px;border:1px solid var(--border)">MegaLoot</div><span
-                  style="color:var(--yellow);font-weight:700;background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:5px;">+1</span>
-              </div>
-            </div>
-          </div>
+      <!-- BOTTOM GRID -->
+      <div class="grid2">
+        <div class="card" id="winsCard"></div>
+        <div class="card" id="howCard"></div>
+      </div>
 
-          <div
-            style="background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.18);border-radius:14px;padding:16px;font-size:12px;color:var(--text2);line-height:1.8;"
-            class="reveal">
-            <strong style="color:var(--text);display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--purpleL)" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              Rules
-            </strong>
-            • 1 free spin every 24 hours<br>
-            • Rewards are points only (no direct Robux)<br>
-            • Streaks reset if you miss a day<br>
-            • Complete tasks to earn much more points
-          </div>
+      <!-- ODDS -->
+      <div class="card" id="oddsCard"></div>
 
-        </div>
+    </div>
+
+    <div class="xp-toast" id="xpToast">
+      <div class="xp-toast-icon">⚡</div>
+      <div>
+        <div><span class="xp-toast-val">+1 XP</span> earned!</div>
+        <div class="xp-toast-lab">Spin completed</div>
       </div>
     </div>
-  </div>
   </div>
   <!-- ══════════════════ LEADERBOARD ══════════════════ -->
   <div id="page-leaderboard" class="page">
@@ -13461,157 +13640,248 @@
     // ════════════════════════════════════════
     // DAILY SPIN
     // ════════════════════════════════════════
-    const SP_REWARDS = [{ pts: 1, w: 35 }, { pts: 2, w: 30 }, { pts: 3, w: 20 }, { pts: 4, w: 10 }, { pts: 5, w: 4 }, { pts: 10, w: 1 }];
-    const SP_MSGS = { 1: 'Better luck tomorrow ', 2: 'Nice small reward ', 3: 'Good spin ', 4: 'Great spin ', 5: 'Very lucky ', 10: 'Jackpot spin ' };
-    let spSpinning = false;
-    let spTimerInt = null;
+    const SEGMENTS = [
+      { label: "100", value: 100, bg: "#0f0a2a", fg: "#a855f7", prob: "30%" },
+      { label: "250", value: 250, bg: "#0d1a2e", fg: "#7dd3fc", prob: "25%" },
+      { label: "500", value: 500, bg: "#1a100a", fg: "#fbbf24", prob: "20%" },
+      { label: "750", value: 750, bg: "#1a0a1a", fg: "#f472b6", prob: "12%" },
+      { label: "1,000", value: 1000, bg: "#0a1a10", fg: "#4ade80", prob: "7%" },
+      { label: "1,500", value: 1500, bg: "#130a2e", fg: "#c084fc", prob: "4%" },
+      { label: "2,500", value: 2500, bg: "#2a0e1a", fg: "#fca5a5", prob: "1.5%" },
+      { label: "5,000", value: 5000, bg: "#0c1a2e", fg: "#93c5fd", prob: "0.5%" },
+    ];
+    const SEG_ANGLE = 360 / SEGMENTS.length;
 
-    function spPickReward() {
-      const r = Math.random() * 100; let acc = 0;
-      for (const rw of SP_REWARDS) { acc += rw.w; if (r < acc) return rw.pts; }
-      return 1;
+    /* ── WHEEL DRAW ────────────────────────────────────────────── */
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    let rotation = 0;
+
+    function drawWheel(rot) {
+      const sz = canvas.width, cx = sz / 2, cy = sz / 2, r = sz / 2 - 2;
+      ctx.clearRect(0, 0, sz, sz);
+
+      SEGMENTS.forEach((seg, i) => {
+        const a0 = ((i * SEG_ANGLE - 90 + rot) * Math.PI) / 180;
+        const a1 = (((i + 1) * SEG_ANGLE - 90 + rot) * Math.PI) / 180;
+        const am = (a0 + a1) / 2;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, a0, a1);
+        ctx.closePath();
+        ctx.fillStyle = seg.bg;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, a0, a1);
+        ctx.closePath();
+        ctx.strokeStyle = "rgba(124,58,237,.2)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(am + Math.PI / 2);
+        const lR = r * 0.65;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = seg.fg;
+        ctx.font = "700 13px 'Inter', system-ui";
+        ctx.fillText(seg.label, 0, -lR);
+        ctx.fillStyle = "rgba(255,255,255,.3)";
+        ctx.font = "500 9px 'Inter', system-ui";
+        ctx.fillText("pts", 0, -lR + 15);
+        ctx.restore();
+      });
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(124,58,237,.25)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
     }
 
-    function spUpdateUI() {
-      const user = getCurrentUser();
-      const readyPill = document.getElementById('sp-ready-pill');
-      const cooldownPill = document.getElementById('sp-cooldown-pill');
-      const loginPill = document.getElementById('sp-login-pill');
-      const mainBtn = document.getElementById('sp-main-btn');
-      const centerBtn = document.getElementById('sp-center-btn');
-      if (!readyPill) return;
-      if (!user) {
-        readyPill.style.display = 'none';
-        cooldownPill.style.display = 'none';
-        loginPill.style.display = 'flex';
-        mainBtn.disabled = true;
-        centerBtn.style.cursor = 'not-allowed';
-        centerBtn.style.opacity = '0.5';
-        return;
+    drawWheel(0);
+
+    /* ── SPIN LOGIC ────────────────────────────────────────────── */
+    let spinning = false, spun = false;
+    const btn = document.getElementById("spinBtn");
+    const resultPill = document.getElementById("resultPill");
+    const resultLabel = document.getElementById("resultLabel");
+    const timerRow = document.getElementById("timerRow");
+
+    btn.addEventListener("click", () => {
+      if (spinning || spun) return;
+      spinning = true;
+      btn.disabled = true;
+      btn.textContent = "Spinning…";
+
+      const idx = Math.floor(Math.random() * SEGMENTS.length);
+      const target = 360 - (idx * SEG_ANGLE + SEG_ANGLE / 2);
+      const extra = (5 + Math.floor(Math.random() * 3)) * 360;
+      const total = extra + target - (rotation % 360);
+      const dur = 4400;
+      const t0 = performance.now();
+      const startRot = rotation;
+      const easeOut = t => 1 - Math.pow(1 - t, 4);
+
+      function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        rotation = startRot + total * easeOut(p);
+        drawWheel(rotation);
+        if (p < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          spinning = false;
+          spun = true;
+          showResult(SEGMENTS[idx]);
+        }
       }
-      loginPill.style.display = 'none';
-      const lastSpin = user.lastSpin || 0;
-      const now = Date.now();
-      const elapsed = now - lastSpin;
-      const cooldownMs = 24 * 60 * 60 * 1000;
-      if (elapsed >= cooldownMs) {
-        readyPill.style.display = 'flex';
-        cooldownPill.style.display = 'none';
-        mainBtn.disabled = false;
-        centerBtn.style.cursor = 'pointer';
-        centerBtn.style.opacity = '1';
-      } else {
-        readyPill.style.display = 'none';
-        cooldownPill.style.display = 'flex';
-        mainBtn.disabled = true;
-        centerBtn.style.cursor = 'not-allowed';
-        centerBtn.style.opacity = '0.5';
-        spStartTimer(cooldownMs - elapsed);
-      }
-    }
+      requestAnimationFrame(tick);
+    });
 
-    function spStartTimer(msLeft) {
-      if (spTimerInt) clearInterval(spTimerInt);
-      const timerEl = document.getElementById('sp-timer');
-      function tick() {
-        const h = Math.floor(msLeft / 3600000);
-        const m = Math.floor((msLeft % 3600000) / 60000);
-        const s = Math.floor((msLeft % 60000) / 1000);
-        if (timerEl) timerEl.textContent = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-        msLeft -= 1000;
-        if (msLeft <= 0) { clearInterval(spTimerInt); spUpdateUI(); }
-      }
-      tick();
-      spTimerInt = setInterval(tick, 1000);
-    }
+    function showResult(seg) {
+      resultLabel.textContent = seg.label;
+      resultPill.classList.add("show");
 
-    function spinWheel() {
-      const user = getCurrentUser();
-      if (!user) { document.getElementById('auth-overlay').classList.add('open'); return; }
-      if (spSpinning) return;
-      const lastSpin = user.lastSpin || 0;
-      if (Date.now() - lastSpin < 24 * 60 * 60 * 1000) { spUpdateUI(); return; }
-      spSpinning = true;
-      const pointer = document.getElementById('sp-pointer');
-      if (pointer) {
-        pointer.style.transition = 'none';
-        pointer.style.transform = 'translateX(-50%)';
-        pointer.style.transformOrigin = 'center bottom';
-      }
-      const ctx = new AudioContext();
-      let delay = 80;
-      let elapsed = 0;
+      btn.textContent = "Claimed ✓";
+      btn.disabled = true;
 
-      function tick() {
-        if (elapsed >= 3000) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = 600;
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.05);
-        delay = Math.min(delay + 18, 400);
-        elapsed += delay;
-        setTimeout(tick, delay);
-      }
-      tick();
-      document.getElementById('sp-main-btn').disabled = true;
-      document.getElementById('sp-center-btn').style.cursor = 'not-allowed';
-      document.getElementById('sp-result').style.display = 'none';
+      prependWin({ pts: seg.value, ago: "just now" });
 
-      const pts = spPickReward();
-      const wheelImg = document.getElementById('sp-wheel-img');
-
-      // Resetează transformul anterior fără animație
-      wheelImg.style.transition = 'none';
-      wheelImg.style.transform = 'rotate(0deg)';
-
-      // Forțează reflow
-      wheelImg.getBoundingClientRect();
-
-      // Rotire: minim 5 ture complete + offset aleatoriu
-      const minSpins = 5;
-      const extraDeg = Math.floor(Math.random() * 360);
-      const totalDeg = minSpins * 360 + extraDeg;
-
-      wheelImg.style.transition = 'transform 3s cubic-bezier(0.25,0.1,0.15,1)';
-      wheelImg.style.transform = `rotate(${totalDeg}deg)`;
+      timerRow.classList.add("show");
+      startCountdown(86399);
 
       setTimeout(() => {
-        spSpinning = false;
-        const users = getUsers();
-        users[user.username].points += pts;
-        users[user.username].totalPoints = (users[user.username].totalPoints || 0) + pts;
-        users[user.username].lastSpin = Date.now();
-        saveUsers(users);                          // points save
-        applyUserToUI(users[user.username]);       // UI update
-
-        // result show
-        const resEl = document.getElementById('sp-result');
-        document.getElementById('sp-result-pts').textContent = '+' + pts;
-        document.getElementById('sp-result-msg').textContent = SP_MSGS[pts] || 'Nice!';
-        resEl.style.display = 'block';
-
-        // history update
-        const histList = document.getElementById('sp-hist-list');
-        if (histList) {
-          const seed = encodeURIComponent(user.username);
-          const row = document.createElement('div');
-          row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(37,37,69,0.4);font-size:13px;';
-          row.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--text2);"><img src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${seed}" style="width:22px;height:22px;border-radius:6px;">${user.username}</div><span style="color:${pts === 10 ? 'var(--green)' : 'var(--yellow)'};font-weight:700;">+${pts}${pts === 10 ? ' ' : ''}</span>`;
-          histList.insertBefore(row, histList.firstChild);
-          if (histList.children.length > 5) histList.removeChild(histList.lastChild);
-        }
-        spUpdateUI();
-        setTimeout(() => {
-          addXpToUser(user.username, 1, 'spin');
-        }, 1500);
-
-      }, 3100);
+        const toast = document.getElementById("xpToast");
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
+      }, 1500);
     }
+
+    /* ── COUNTDOWN ─────────────────────────────────────────────── */
+    const timerVal = document.getElementById("timerVal");
+    function startCountdown(secs) {
+      function fmt(s) {
+        const h = String(Math.floor(s / 3600)).padStart(2, "0");
+        const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+        const ss = String(s % 60).padStart(2, "0");
+        return `${h}:${m}:${ss}`;
+      }
+      timerVal.textContent = fmt(secs);
+      const id = setInterval(() => {
+        secs--;
+        timerVal.textContent = fmt(secs);
+        if (secs <= 0) clearInterval(id);
+      }, 1000);
+    }
+
+    /* ── STREAK ────────────────────────────────────────────────── */
+    const CURRENT_DAY = 4;
+    const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const BONUSES = ["+1×", "", "", "", "+1.5×", "", "+2×"];
+
+    (function buildStreak() {
+      const card = document.getElementById("streakCard");
+      card.innerHTML = `
+    <div class="card-head">
+      <div>
+        <div class="card-title">Daily Streak</div>
+        <div class="card-sub">Spin every day to unlock multipliers</div>
+      </div>
+      <div class="badge">🔥 ${CURRENT_DAY} days</div>
+    </div>
+    <div class="days">
+      ${DAYS.map((d, i) => {
+        const n = i + 1;
+        const cls = n < CURRENT_DAY ? "done" : n === CURRENT_DAY ? "today" : "future";
+        const inner = n < CURRENT_DAY
+          ? `<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5L5.5 9.5L10.5 4" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+          : `<span>${n}</span>`;
+        const bonus = BONUSES[i] || (n < CURRENT_DAY ? "✓" : n === CURRENT_DAY ? "today" : "");
+        return `
+          <div class="day">
+            <div class="day-label">${d}</div>
+            <div class="day-dot ${cls}">${inner}</div>
+            <div class="day-bonus ${n === CURRENT_DAY ? 'today' : ''}">${bonus}</div>
+          </div>`;
+      }).join("")}
+    </div>`;
+    })();
+
+    /* ── RECENT WINS ───────────────────────────────────────────── */
+    let wins = [
+      { pts: 5000, ago: "2 days ago" },
+      { pts: 750, ago: "3 days ago" },
+      { pts: 1500, ago: "4 days ago" },
+      { pts: 250, ago: "5 days ago" },
+    ];
+
+    function renderWins() {
+      document.getElementById("winsCard").innerHTML = `
+    <div class="card-head" style="margin-bottom:16px">
+      <div>
+        <div class="card-title">Recent wins</div>
+        <div class="card-sub">Your last spins</div>
+      </div>
+    </div>
+    <div class="wins-list">
+      ${wins.slice(0, 4).map(w => `
+        <div class="win-row">
+          <div class="win-left">
+            <div class="win-dot"></div>
+            <div class="win-pts">${w.pts.toLocaleString()}<small>pts</small></div>
+          </div>
+          <div class="win-ago">${w.ago}</div>
+        </div>`).join("")}
+    </div>`;
+    }
+    renderWins();
+
+    function prependWin(w) {
+      wins = [w, ...wins.slice(0, 3)];
+      renderWins();
+    }
+
+    /* ── HOW IT WORKS ──────────────────────────────────────────── */
+    (function buildHow() {
+      const steps = [
+        { title: "Spin once every 24 hours", detail: "Your free spin resets daily at midnight UTC." },
+        { title: "Earn random points", detail: "Win between 100 and 5,000 pts per spin." },
+        { title: "Build a streak for bonuses", detail: "7-day streaks unlock a guaranteed 2× reward." },
+      ];
+      document.getElementById("howCard").innerHTML = `
+    <div style="margin-bottom:16px">
+      <div class="card-title">How it works</div>
+      <div class="card-sub">Three things to know</div>
+    </div>
+    <div class="how-list">
+      ${steps.map((s, i) => `
+        <div class="how-item">
+          <div class="how-num">${i + 1}</div>
+          <div class="how-body"><strong>${s.title}</strong>${s.detail}</div>
+        </div>`).join("")}
+    </div>`;
+    })();
+
+    /* ── ODDS ──────────────────────────────────────────────────── */
+    (function buildOdds() {
+      document.getElementById("oddsCard").innerHTML = `
+    <div style="margin-bottom:16px">
+      <div class="card-title">Win probabilities</div>
+      <div class="card-sub">Every spin is fair and independent</div>
+    </div>
+    <div class="odds-grid">
+      ${SEGMENTS.map(s => `
+        <div class="odds-cell">
+          <div class="odds-val" style="color:${s.fg}">${s.label}</div>
+          <div class="odds-unit">pts</div>
+          <div class="odds-pct">${s.prob}</div>
+        </div>`).join("")}
+    </div>`;
+    })();
 
     // ════════════════════════════════════════
     // XP + LEVEL SYSTEM
